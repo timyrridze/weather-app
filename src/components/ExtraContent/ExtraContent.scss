@@ -1,0 +1,7 @@
+@use "../../styles/variables" as *;
+
+.ExtraContent {
+  flex-grow: 1;
+
+  background: $semiTransparentGrey;
+}
