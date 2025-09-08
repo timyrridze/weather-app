@@ -1,0 +1,34 @@
+#cloud {
+  transform-box: fill-box;
+
+  &.animation-move-out {
+    animation: animation-move-out cubic-bezier(0.77, 0, 0.175, 1) 1;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+  }
+
+  &.animation-move-in {
+    animation: animation-move-in cubic-bezier(0.77, 0, 0.175, 1) 1;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes animation-move-out {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes animation-move-in {
+  0% {
+    transform: translateX(-200%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

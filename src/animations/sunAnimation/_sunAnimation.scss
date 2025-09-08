@@ -1,0 +1,63 @@
+#sunCircles,
+#sunbeams {
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sunCircles {
+  &.animation-scale-small {
+    animation: animation-scale-small 1.3s cubic-bezier(0.77, 0, 0.175, 1) 1;
+  }
+}
+
+#sunbeams {
+  &.animation-scale-medium {
+    animation: animation-scale-medium 1.3s cubic-bezier(0.77, 0, 0.175, 1) 1;
+  }
+}
+
+
+
+@keyframes animation-scale-medium {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(0.95);
+  }
+
+  50% {
+    transform: scale(2.4);
+  }
+
+  75% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes animation-scale-small {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(0.9);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  75% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

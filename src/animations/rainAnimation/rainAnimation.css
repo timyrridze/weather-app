@@ -1,0 +1,19 @@
+.rainDrop {
+
+}
+
+.rainDrop.animation-fall {  
+  --translate-y: none;
+
+  animation: animation-fall 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
+}
+
+/* @keyframes animation-fall {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(var(--translate-y));
+  }
+} */

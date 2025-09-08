@@ -1,0 +1,33 @@
+#windParticles {
+  transform-box: fill-box;  
+
+  stroke: rgb(178, 234, 255);
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+
+  &.animation-fly {
+
+    .windParticle {
+      animation: animation-fly cubic-bezier(0.39, 0.575, 0.565, 1) 1;
+      animation-fill-mode: forwards;
+    }
+    
+  }
+
+}
+
+.windParticle {
+  shape-rendering: crispEdges;
+}
+
+@keyframes animation-fly {
+
+  0% {
+    stroke-dashoffset: 100;
+  }
+
+  100% {
+    stroke-dashoffset: -100;
+  }
+  
+}

@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss'
+import React, {createContext, useState} from "react"
+import { MainContent } from './components/MainContent/MainContent'
+import { ExtraContent } from './components/ExtraContent/ExtraContent'
+
+export const WeatherContext = createContext(null)
+
+// New York, Berlin...
+export const defaultCity = "New York"
 
 function App() {
+  const [weather, setWeather] = useState()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    <WeatherContext.Provider value={weather}>
+      <MainContent setWeather={setWeather} />
+      <ExtraContent />
+    </WeatherContext.Provider>
+    
+  )
+
 }
 
-export default App;
+export default App
