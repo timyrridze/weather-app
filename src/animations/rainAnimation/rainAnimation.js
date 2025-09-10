@@ -1,5 +1,9 @@
 import "./rainAnimation.css"
 
+function getYTranslateCorrection() {
+  return navigator.userAgent.includes("Firefox") ? 0.5 : -1
+}
+
 export function rainAnimation(rain, fallCoord, svgWidth) {
   
   return async (resolve) => {
@@ -9,45 +13,19 @@ export function rainAnimation(rain, fallCoord, svgWidth) {
       const rainDrop = rain.children[i].children[0]
 
       await new Promise((resolve) => {
-        let rainDropYTranslation = 0
+        const rainDropCoord = rainDrop.getBoundingClientRect().y
+        const rainDropHeight = rainDrop.getBoundingClientRect().height
 
-        requestAnimationFrame(function animate(timestamp) {
-          const expected = rainDrop.getBoundingClientRect().y + 70
+        rainDrop.style.setProperty('--translate-y', `${(fallCoord - (rainDropCoord + rainDropHeight)) / (svgWidth * 0.01647207059) + getYTranslateCorrection()}px`)
 
-          rainDropYTranslation += 70
-          rainDrop.style.transform = `translate(0, ${(rainDropYTranslation / (svgWidth * 0.01647207059)) + "px"})`
-
-          const being = rainDrop.getBoundingClientRect().y
-          
-          if(expected !== being) {
-            console.log("expected, being")
-            console.log(expected, being)
-          }
-
-          const rainDropCoord = () => rainDrop.getBoundingClientRect().y
-          const rainDropHeight = rainDrop.getBoundingClientRect().height
-          const rainDropBottomCoord = () => rainDropCoord() + rainDropHeight
-
-          if (rainDropBottomCoord() < fallCoord) {
-            requestAnimationFrame(animate)
-          } else {
-            console.log(rainDropBottomCoord(), fallCoord)
-            rainDrop.style.transform = `translate(0, ${((rainDropYTranslation - (rainDropBottomCoord() - fallCoord)) / (svgWidth * 0.01647207059)) + "px"})`
-            console.log(rainDropBottomCoord(), fallCoord)
-          }
-        })
-
-        // + 1 потому что сам по себе translate при одном и том же входном значении применяет разные значения
-        // rainDrop.style.setProperty('--translate-y', `${(fallCoord - (rainDropCoord + rainDropHeight) + 1) / (svgWidth * 0.01647207059)}px`)
+        rainDrop.classList.add("animation-fall")
 
         setTimeout(() => resolve(), 200)
       })
 
       lastRainDrop = rainDrop
-
-      break;
     }
-    
+
     lastRainDrop.onanimationend = resolve
   }
   

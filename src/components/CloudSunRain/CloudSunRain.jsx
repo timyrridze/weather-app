@@ -86,7 +86,7 @@ export const CloudSunRain = memo(
 
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
             <path className={"rainDrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            {/* <image href={rain} transform="scale(0.24)" y={80}/> */}
+            <image href={rain} transform="scale(0.24)" y={80}/>
           </g>
         </g>
       </g>
@@ -106,13 +106,12 @@ export const CloudSunRain = memo(
         setTimeout(() => {
           weatherAnimation([rainAnimation(rain, computeRainAnimationFallCoord(), width)])
         }, 1000)
-
       }
 
     }, [weather])
 
     return (
-      <>
+
         <svg viewBox={`0 0 66.98000000007721 61.3`} width={`${width}`} height={`${height}`} overflow="visible" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnssvg="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
           <g id="layer1" transform="translate(-88.48704,-56.114233)">
             <g id="layer1-5" transform="translate(81.158096,17.24602)">
@@ -125,10 +124,7 @@ export const CloudSunRain = memo(
             </g>
           </g>
         </svg>
-        <svg width={300} height={300} viewBox="0 0 132 30">
-          <path className={"rainDrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </>
+
     )
 
   }
