@@ -3,7 +3,6 @@ import {CloudSunRain} from "../CloudSunRain/CloudSunRain"
 
 
 export function MainWeather() {
-  
   const computeRainAnimationCoord = () => {
     return window.innerHeight
   }

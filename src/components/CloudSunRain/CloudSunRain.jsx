@@ -83,10 +83,9 @@ export const CloudSunRain = memo(
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,11.401336,78.242495)">
             <path className={"rainDrop"} d="M 15,0 V 19.1942" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </g>
-
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
-            <path className={"rainDrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <image href={rain} transform="scale(0.24)" y={80}/>
+            {/* <path className={"rainDrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> */}
+            <image className={"rainDrop"} href={rain} x={111.5} y={-1.5} transform="scale(0.125)"/>
           </g>
         </g>
       </g>
