@@ -8,7 +8,7 @@ import { cloudAnimation } from "../../animations/cloudAnimation/cloudAnimation"
 import { sunAnimation } from "../../animations/sunAnimation/sunAnimation"
 import { windAnimation } from "../../animations/windAnimation/windAnimation"
 import { rainAnimation } from "../../animations/rainAnimation/rainAnimation"
-import rain from "../../assets/images/rain-big.png"
+
 
 export const CloudSunRain = memo( 
 
@@ -73,19 +73,22 @@ export const CloudSunRain = memo(
 
         </g>
 
-        <g ref={rainRef} id="rain" transform="translate(157.83568,29.499829)">
+        <g id="rain" transform="translate(157.83568,29.499829)" ref={rainRef}>
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
-            <path className={"rainDrop"} d="M 15,0 V 12" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path className={"raindrop"} d="M 15,0 V 12" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <g>
+
+            </g>
           </g>
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,7.0496096,74.423924)">
-            <path className={"rainDrop"} d="M 12.947393,3.4637749 V 19.060875" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path className={"raindrop"} d="M 12.947393,3.4637749 V 19.060875" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </g>
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,11.401336,78.242495)">
-            <path className={"rainDrop"} d="M 15,0 V 19.1942" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path className={"raindrop"} d="M 15,0 V 19.1942" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </g>
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
-            {/* <path className={"rainDrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> */}
-            <image className={"rainDrop"} href={rain} x={111.5} y={-1.5} transform="scale(0.125)"/>
+            <path className={"raindrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+
           </g>
         </g>
       </g>
