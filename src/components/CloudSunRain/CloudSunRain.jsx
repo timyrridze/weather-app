@@ -77,7 +77,7 @@ export const CloudSunRain = memo(
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
             <path className={"raindrop"} d="M 15,0 V 12" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             <g>
-
+              <path></path>
             </g>
           </g>
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,7.0496096,74.423924)">
@@ -88,7 +88,6 @@ export const CloudSunRain = memo(
           </g>
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
             <path className={"raindrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-
           </g>
         </g>
       </g>

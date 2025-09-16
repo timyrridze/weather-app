@@ -1,5 +1,6 @@
 .raindrop {
-  display: none;
+  stroke-dasharray: 4 300;
+  stroke-dashoffset: -23;
 }
 
 .raindrop.animation-fall {  
@@ -9,6 +10,7 @@
 }
 
 @keyframes animation-fall {
+
   from {
     transform: translateY(0);
   }
@@ -16,4 +18,5 @@
   to {
     transform: translateY(var(--translate-y));
   }
+
 }

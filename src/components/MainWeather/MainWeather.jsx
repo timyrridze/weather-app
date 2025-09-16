@@ -11,7 +11,7 @@ export function MainWeather() {
 
     <div className="MainWeather">
 
-      <CloudSunRain width={303} animating={true} computeRainAnimationFallCoord={computeRainAnimationCoord}/>
+      <CloudSunRain width={258} animating={true} computeRainAnimationFallCoord={computeRainAnimationCoord}/>
 
     </div>  
     
