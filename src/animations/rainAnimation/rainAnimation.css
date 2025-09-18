@@ -1,7 +1,7 @@
-.raindrop {
-  stroke-dasharray: 4 300;
+/* .raindrop {
+  stroke-dasharray: 8 15;
   stroke-dashoffset: -23;
-}
+} */
 
 .raindrop.animation-fall {  
   --translate-y: none;

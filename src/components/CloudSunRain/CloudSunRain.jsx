@@ -73,13 +73,30 @@ export const CloudSunRain = memo(
 
         </g>
 
-        <g id="rain" transform="translate(157.83568,29.499829)" ref={rainRef}>
-          <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
-            <path className={"raindrop"} d="M 15,0 V 12" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <g ref={rainRef} id="rain" transform="translate(157.83568,29.499829)" stroke="#002bed" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none">
+
+          <g transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
+            <path className={"raindrop"} d="M 15,0 V 12"/>
             <g>
-              <path></path>
+              <path
+                d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
+                transform="translate(21.32 -40.611)"
+              />
+              <path
+                d="M-18.34 37.838c9.81.144 21.472 4.554 21.186 14.196"
+                transform="translate(21.32 -40.611)"
+              />
+              <path
+                d="M22.96 42.848c-9.797-.055-19.933 1.603-20.16 9.45"
+                transform="translate(21.32 -40.611)"
+              />
+              <path
+                d="M23.833 37.838c-9.81.144-21.472 4.554-21.186 14.196"
+                transform="translate(21.32 -40.611)"
+              />
             </g>
           </g>
+          
           <g style={{ fill: "none" }} transform="matrix(1.1024306,0,0,1.1024306,7.0496096,74.423924)">
             <path className={"raindrop"} d="M 12.947393,3.4637749 V 19.060875" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </g>
@@ -90,6 +107,7 @@ export const CloudSunRain = memo(
             <path className={"raindrop"} d="M 15,0 V 22.7913" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </g>
         </g>
+        
       </g>
     )
 
