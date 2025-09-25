@@ -1,6 +1,5 @@
 import "./rainAnimation.css"
 
-
 function getYTranslateCorrection() {
   return navigator.userAgent.includes("Firefox") ? 0.5 : -1
 }
@@ -13,6 +12,10 @@ export function rainAnimation(rain: SVGElement, fallCoord: number, svgWidth: num
     for (let i = rain.children.length - 1; i >= 0; i--) {
       const raindrop = rain.children[i].children[0] as typeof rain
 
+      if(!raindrop.classList.contains("raindrop")) {
+        throw("element with 'raindrop' class expected as a raindrop")
+      }
+
       await new Promise((resolve: (value: void) => void) => {
         const raindropCoord = raindrop.getBoundingClientRect().y
         const raindropHeight = raindrop.getBoundingClientRect().height
@@ -20,6 +23,8 @@ export function rainAnimation(rain: SVGElement, fallCoord: number, svgWidth: num
         raindrop.style.setProperty('--translate-y', `${(fallCoord - (raindropCoord + raindropHeight)) / (svgWidth * 0.01647207059) + getYTranslateCorrection()}px`)
 
         raindrop.classList.add("animation-fall")
+
+        // console.log(raindrop.getTotalLength())
 
         setTimeout(() => resolve(), 200)
       })

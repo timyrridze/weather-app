@@ -46,7 +46,7 @@ export const CloudSunRain = memo(
                 <circle style={{ fill: "#fcdd66" }} cx="55.845001" cy="55.845001" r="55.845001" id="circle332" />
               </g>
             </g>
-
+            
             <g id="g12946" style={{ display: "inline" }}>
               <g id="g342">
                 <g id="g340">
@@ -54,7 +54,7 @@ export const CloudSunRain = memo(
                 </g>
               </g>
             </g>
-
+          
           </g>
 
           <switch id="switch58" transform="matrix(0.90311124,0,0,0.9041026,10.8,10.4)">
@@ -73,24 +73,24 @@ export const CloudSunRain = memo(
 
         </g>
 
-        <g ref={rainRef} id="rain" transform="translate(157.83568,29.499829)" stroke="#002bed" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none">
-
+        <g ref={rainRef} id="rain" transform="translate(157.83568,29.499829)" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+          
           <g transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
             <path className={"raindrop"} d="M 15,0 V 12"/>
             <g>
-              <path
+              <path className="raindrop-part"
                 d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
                 transform="translate(21.32 -40.611)"
               />
-              <path
+              <path className="raindrop-part"
                 d="M-18.34 37.838c9.81.144 21.472 4.554 21.186 14.196"
                 transform="translate(21.32 -40.611)"
               />
-              <path
+              <path className="raindrop-part"
                 d="M22.96 42.848c-9.797-.055-19.933 1.603-20.16 9.45"
                 transform="translate(21.32 -40.611)"
               />
-              <path
+              <path className="raindrop-part"
                 d="M23.833 37.838c-9.81.144-21.472 4.554-21.186 14.196"
                 transform="translate(21.32 -40.611)"
               />
