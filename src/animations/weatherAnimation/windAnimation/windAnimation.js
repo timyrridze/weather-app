@@ -1,3 +1,5 @@
+import "./windAnimation.scss"
+
 export function windAnimation(windParticles, animationDuration) {
 
   windParticles.querySelectorAll(".windParticle").forEach(windParticle => {

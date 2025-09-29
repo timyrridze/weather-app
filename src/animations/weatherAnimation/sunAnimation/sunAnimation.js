@@ -1,3 +1,5 @@
+import "./sunAnimation.scss"
+
 export function sunAnimation(sun) {
 
   return (resolve, reject) => {

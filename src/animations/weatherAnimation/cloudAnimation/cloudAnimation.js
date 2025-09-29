@@ -1,3 +1,5 @@
+import "./cloudAnimation.scss"
+
 export function cloudAnimation(cloud, animationDuration) {
 
   cloud.style.animationDuration = `${animationDuration}s`

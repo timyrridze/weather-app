@@ -2,12 +2,12 @@ import "./CloudSunRain.scss"
 import { useEffect, useRef, memo, useContext } from "react"
 import { WeatherContext } from "../../App"
 import { WindParticles } from "../WindParticles/WindParticles"
-import { weatherAnimation } from "../../animations/weatherAnimation"
-import { calculateAnimationDuration } from "../../animations/calculateAnimationDuration"
-import { cloudAnimation } from "../../animations/cloudAnimation/cloudAnimation"
-import { sunAnimation } from "../../animations/sunAnimation/sunAnimation"
-import { windAnimation } from "../../animations/windAnimation/windAnimation"
-import { rainAnimation } from "../../animations/rainAnimation/rainAnimation"
+import { weatherAnimation } from "../../animations/weatherAnimation/weatherAnimation"
+import { calculateAnimationDuration } from "../../animations/weatherAnimation/calculateAnimationDuration"
+import { cloudAnimation } from "../../animations/weatherAnimation/cloudAnimation/cloudAnimation"
+import { sunAnimation } from "../../animations/weatherAnimation/sunAnimation/sunAnimation"
+import { windAnimation } from "../../animations/weatherAnimation/windAnimation/windAnimation"
+import { rainAnimation } from "../../animations/weatherAnimation/rainAnimation/rainAnimation"
 
 
 export const CloudSunRain = memo( 
@@ -57,7 +57,7 @@ export const CloudSunRain = memo(
           
           </g>
 
-          <switch id="switch58" transform="matrix(0.90311124,0,0,0.9041026,10.8,10.4)">
+          <switch transform="matrix(0.90311124,0,0,0.9041026,10.8,10.4)">
             <foreignObject requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" x="0" y="0" width="1" height="1" />
             <g iextraneous="self" id="sunbeams" fill="#fbd009ff">
               <path className="sunbeam" d="m 14.67,52.671 h -10 c -1.381,0 -2.5,-1.119 -2.5,-2.5 0,-1.381 1.119,-2.5 2.5,-2.5 h 10 c 1.381,0 2.5,1.119 2.5,2.5 0,1.381 -1.119,2.5 -2.5,2.5 z" id="path40" />
@@ -73,7 +73,7 @@ export const CloudSunRain = memo(
 
         </g>
 
-        <g ref={rainRef} id="rain" transform="translate(157.83568,29.499829)" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        <g ref={rainRef} className="rain" transform="translate(157.83568,29.499829)" stroke="#002bed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
           
           <g transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
             <path className={"raindrop"} d="M 15,0 V 12"/>
