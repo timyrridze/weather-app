@@ -14,7 +14,7 @@ function fallAnimation<T extends SVGElement>(raindrop: T, fallCoord: number, svg
   raindrop.classList.add("animation-fall")
 }
 
-function splashAnimation<T extends SVGGElement>(raindropParts: T, ) {
+function splashAnimation<T extends SVGGElement>(raindropParts: T, raindropLength: number) {
   
 }
 
@@ -25,7 +25,7 @@ function sleep(ms: number) {
 export function rainAnimation<T extends SVGElement>(rain: T, fallCoord: number, svgWidth: number) {
 
   return async (resolve: (value: void) => void) => {
-    let lastAnimatedElement: Object & SVGElement = null as unknown as (Object & SVGElement)
+    let lastAnimatedElement: (Object & SVGElement) | null = null
 
     for (let i = rain.children.length - 1; i >= 0; i--) {
       const raindrop = rain.children[i].children[0]
@@ -40,7 +40,7 @@ export function rainAnimation<T extends SVGElement>(rain: T, fallCoord: number, 
       }
 
       raindrop.onanimationend = () => {
-        splashAnimation(raindropParts)
+        splashAnimation(raindropParts, raindrop.getTotalLength())
       }
 
       fallAnimation(raindrop, fallCoord, svgWidth)
@@ -50,7 +50,7 @@ export function rainAnimation<T extends SVGElement>(rain: T, fallCoord: number, 
       lastAnimatedElement = raindropParts
     }
 
-    if (lastAnimatedElement != undefined) lastAnimatedElement.onanimationend = () => resolve()
+    if (lastAnimatedElement) lastAnimatedElement.onanimationend = () => resolve()
   }
   
 }

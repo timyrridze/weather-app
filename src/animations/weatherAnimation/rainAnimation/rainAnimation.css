@@ -1,7 +1,11 @@
-.raindrop.animation-fall {  
+.raindrop.animation-fall {
   --translate-y: none;
 
   animation: animation-fall 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
+}
+
+.raindrop-parts {
+  display: none;
 }
 
 @keyframes animation-fall {
@@ -11,6 +15,7 @@
   }
 
   100% {
+    opacity: 0;
     visibility: hidden;
     transform: translateY(var(--translate-y));
   }
