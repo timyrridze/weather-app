@@ -1,5 +1,5 @@
 import "./MainWeather.scss"
-import {CloudSunRain} from "../CloudSunRain/CloudSunRain"
+import {CloudSunRain} from "../CloudSunRain/CloudSunRain.jsx"
 
 
 export function MainWeather() {

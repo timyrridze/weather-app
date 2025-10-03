@@ -1,7 +1,7 @@
 import './App.scss'
 import React, {createContext, useState} from "react"
-import { MainContent } from './components/MainContent/MainContent'
-import { ExtraContent } from './components/ExtraContent/ExtraContent'
+import { MainContent } from './components/MainContent/MainContent.jsx'
+import { ExtraContent } from './components/ExtraContent/ExtraContent.jsx'
 
 export const WeatherContext = createContext(null)
 

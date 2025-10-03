@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, memo } from "react"
 import "./SelectCity.scss"
-import { defaultCity } from "../../App"
+import { defaultCity } from "../../App.jsx"
 import { cities } from "../../api/cities"
 import {fetchWeatherData} from "../../api/apiService"
 

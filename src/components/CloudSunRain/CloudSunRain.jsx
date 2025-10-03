@@ -1,7 +1,7 @@
 import "./CloudSunRain.scss"
 import { useEffect, useRef, memo, useContext } from "react"
 import { WeatherContext } from "../../App"
-import { WindParticles } from "../WindParticles/WindParticles"
+import { WindParticles } from "../WindParticles/WindParticles.jsx"
 import { weatherAnimation } from "../../animations/weatherAnimation/weatherAnimation"
 import { calculateAnimationDuration } from "../../animations/weatherAnimation/calculateAnimationDuration"
 import { cloudAnimation } from "../../animations/weatherAnimation/cloudAnimation/cloudAnimation"

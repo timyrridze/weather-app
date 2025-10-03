@@ -1,6 +1,6 @@
 import "./MainContent.scss"
-import { MainWeather } from '../MainWeather/MainWeather'
-import { SelectCity } from "../SelectCity/SelectCity"
+import { MainWeather } from '../MainWeather/MainWeather.jsx'
+import { SelectCity } from "../SelectCity/SelectCity.jsx"
 
 
 export function MainContent({ setWeather }) {
