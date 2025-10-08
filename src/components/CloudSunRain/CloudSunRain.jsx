@@ -2,6 +2,7 @@ import "./CloudSunRain.scss"
 import { useEffect, useRef, memo, useContext } from "react"
 import { WeatherContext } from "../../App"
 import { WindParticles } from "../WindParticles/WindParticles.jsx"
+import { Rain } from "../Rain/Rain.tsx"
 import { weatherAnimation } from "../../animations/weatherAnimation/weatherAnimation"
 import { calculateAnimationDuration } from "../../animations/weatherAnimation/calculateAnimationDuration"
 import { cloudAnimation } from "../../animations/weatherAnimation/cloudAnimation/cloudAnimation"
@@ -29,12 +30,19 @@ export const CloudSunRain = memo(
         <WindParticles ref={windParticlesNodeRef} y={70} svgWidth={width} scaleToElement={".MainContent"} />
 
         <g id="cloud" ref={cloudRef}>
-          <g id="g17-0" transform="matrix(-0.10787886,0,0,0.10805019,181.27083,66)" style={{ fill: "#000000" }}>
+          <g id="g17-0" 
+             transform="matrix(-0.10787886,0,0,0.10805019,181.27083,66)" 
+             style={{ fill: "#000000" }}>
+
             <g id="g15-2">
-              <g style={{ fill: "none", stroke: "#f3f3f3", strokeWidth: "8.5" }} id="g781" transform="matrix(-2.0000039,0,0,2.0000039,514.93207,-29.916667)">
+              <g 
+              style={{ fill: "none", stroke: "#f3f3f3", strokeWidth: "8.5" }} 
+              id="g781" 
+              transform="matrix(-2.0000039,0,0,2.0000039,514.93207,-29.916667)">
                 <path d="M 160,212 H 72 A 60,60 0 1 1 83.58838,93.11932 83.99846,83.99846 0 1 1 160,212 Z M 72,100 a 52,52 0 0 0 0,104 h 88 A 76,76 0 1 0 84,128 4,4 0 0 1 76,128 83.6458,83.6458 0 0 1 80.55322,100.70013 52.47853,52.47853 0 0 0 72,100 Z" />
               </g>
             </g>
+            
           </g>
         </g>
 
@@ -73,105 +81,7 @@ export const CloudSunRain = memo(
 
         </g>
 
-        <g 
-          ref={rainRef} 
-          className="rain" 
-          transform="translate(157.83568,29.499829)" 
-          stroke="#002bed" 
-          strokeWidth="2"
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          fill="none">
-          
-          <g transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
-            <path className={"raindrop"} d="M 15,0 V 12"/>
-            <g className="raindrop-parts">
-              <path className="lower-raindrop-part"
-                d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M-18.34 37.838c9.81.144 21.472 4.554 21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-              <path className="lower-raindrop-part"
-                d="M22.96 42.848c-9.797-.055-19.933 1.603-20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M23.833 37.838c-9.81.144-21.472 4.554-21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-            </g>
-          </g>
-          
-          <g transform="matrix(1.1024306,0,0,1.1024306,7.0496096,74.423924)">
-            <path className={"raindrop"} d="M 12.947393,3.4637749 V 19.060875" />
-            <g className="raindrop-parts">
-              <path className="lower-raindrop-part"
-                d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M-18.34 37.838c9.81.144 21.472 4.554 21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-              <path className="lower-raindrop-part"
-                d="M22.96 42.848c-9.797-.055-19.933 1.603-20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M23.833 37.838c-9.81.144-21.472 4.554-21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-            </g>
-          </g>
-
-          <g transform="matrix(1.1024306,0,0,1.1024306,11.401336,78.242495)">
-            <path className={"raindrop"} d="M 15,0 V 19.1942" />
-            <g className="raindrop-parts">
-              <path className="lower-raindrop-part"
-                d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M-18.34 37.838c9.81.144 21.472 4.554 21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-              <path className="lower-raindrop-part"
-                d="M22.96 42.848c-9.797-.055-19.933 1.603-20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M23.833 37.838c-9.81.144-21.472 4.554-21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-            </g>
-          </g>
-
-          <g transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
-            <path className={"raindrop"} d="M 15,0 V 22.7913" />
-            <g className="raindrop-parts">
-              <path className="lower-raindrop-part"
-                d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M-18.34 37.838c9.81.144 21.472 4.554 21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-              <path className="lower-raindrop-part"
-                d="M22.96 42.848c-9.797-.055-19.933 1.603-20.16 9.45"
-                transform="translate(0, -40.611)"
-              />
-              <path className="higher-raindrop-part"
-                d="M23.833 37.838c-9.81.144-21.472 4.554-21.186 14.196"
-                transform="translate(0, -40.611)"
-              />
-            </g>
-          </g>
-
-        </g>
+        <Rain ref={rainRef}/>
         
       </g>
     )
@@ -188,7 +98,7 @@ export const CloudSunRain = memo(
         const animationDuration = calculateAnimationDuration(windspeed)
 
         setTimeout(() => {
-          weatherAnimation([windAnimation(windParticles, animationDuration), cloudAnimation(cloud, animationDuration), sunAnimation(sun), rainAnimation(rain, computeRainAnimationFallCoord(), width)])
+          weatherAnimation([])
         }, 1000)
       }
 

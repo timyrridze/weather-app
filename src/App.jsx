@@ -6,7 +6,7 @@ import { ExtraContent } from './components/ExtraContent/ExtraContent.jsx'
 export const WeatherContext = createContext(null)
 
 // New York, Berlin...
-export const defaultCity = "New York"
+export const DEFAULT_CITY = "New York"
 
 function App() {
   const [weather, setWeather] = useState()

@@ -14,7 +14,7 @@ function fallAnimation<T extends SVGElement>(raindrop: T, fallCoord: number, svg
   raindrop.classList.add("animation-fall")
 }
 
-function splashAnimation<T extends SVGGElement>(raindropParts: T, raindropLength: number) {
+function splashAnimation<T extends SVGGElement>(raindropParts: T) {
   
 }
 
@@ -40,7 +40,7 @@ export function rainAnimation<T extends SVGElement>(rain: T, fallCoord: number, 
       }
 
       raindrop.onanimationend = () => {
-        splashAnimation(raindropParts, raindrop.getTotalLength())
+        splashAnimation(raindropParts)
       }
 
       fallAnimation(raindrop, fallCoord, svgWidth)

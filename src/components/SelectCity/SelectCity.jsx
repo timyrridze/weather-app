@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, memo } from "react"
 import "./SelectCity.scss"
-import { defaultCity } from "../../App.jsx"
+import { DEFAULT_CITY } from "../../App.jsx"
 import { cities } from "../../api/cities"
 import {fetchWeatherData} from "../../api/apiService"
 
@@ -140,7 +140,7 @@ function Cities({ setCity, citiesElementRef }) {
 export const SelectCity = memo(
 
 function SelectCity({ setWeather }) {
-  const [city, setCity] = useState(defaultCity)
+  const [city, setCity] = useState(DEFAULT_CITY)
 
   const citiesElementRef = useRef()
 
