@@ -8,7 +8,23 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
       const raindropContainers = ref.current.querySelectorAll(".raindrop-container")
 
       raindropContainers.forEach(raindropContainer => {
-        const raindrop = raindropContainer.querySelector(".raindrop")
+        const raindrop: SVGPathElement | null = raindropContainer.querySelector(".raindrop")
+        const raindropParts: SVGGElement | null = raindropContainer.querySelector(".raindrop-parts")
+
+        if (raindrop && raindropParts) {
+          const strokeDashLength = raindrop.getTotalLength() / raindropParts.children.length
+          
+          for (let i = 0; i < raindropParts.children.length; i++) {
+            const raindropPart = raindropParts.children[i]
+
+            if (!(raindropPart instanceof SVGPathElement)) {
+              throw ("raindropPart is expected to be of type SVGPathElement")
+            }
+
+            raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`
+            raindropPart.style.strokeDashoffset = `${strokeDashLength}`
+          }
+        }
       })
     }
 
