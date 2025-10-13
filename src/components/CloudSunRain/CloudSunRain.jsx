@@ -111,6 +111,7 @@ export const CloudSunRain = memo(
             <g id="layer1-5" transform="translate(81.158096,17.24602)">
               <g id="layer1-8" transform="translate(17.112861,-8.2028569)">
 
+                <rect width={100} height={100} fill="black"></rect>
                 {mainLayer}
 
               </g>

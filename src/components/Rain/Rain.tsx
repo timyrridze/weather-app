@@ -15,6 +15,12 @@ function defineRaindropPartsStrokeDash(raindropParts: SVGGElement, raindropTotal
   }
 }
 
+function moveRaindropPartsTo(raindropParts: SVGGElement, coord: {x: number, y: number}) {
+  const xAxisDiff: number = coord.x - raindropParts.getBoundingClientRect().x - raindropParts.getBoundingClientRect().width / 2
+
+  raindropParts.style.transform = `translate(${xAxisDiff * (1 / 1.1024306)}px, 0)`
+}
+
 export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGGElement>) {
 
   useEffect(() => {
@@ -28,6 +34,7 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
 
         if (raindrop && raindropParts) {
           defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
+          moveRaindropPartsTo(raindropParts, { x: raindrop.getBoundingClientRect().x, y: raindrop.getBoundingClientRect().y })
         }
       })
     }
