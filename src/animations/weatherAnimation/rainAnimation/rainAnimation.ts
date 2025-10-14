@@ -1,6 +1,5 @@
 import "./rainAnimation.css"
 
-
 function getYTranslateCorrection() {
   return navigator.userAgent.includes("Firefox") ? 0.5 : -1
 }

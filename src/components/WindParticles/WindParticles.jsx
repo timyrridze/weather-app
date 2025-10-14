@@ -1,6 +1,8 @@
 import { useState, memo, forwardRef, useMemo, useEffect, useLayoutEffect } from "react"
 
+
 function getStrokeWidth(strokeWidthInPx, svgWidth, devicePixelRatio) {
+  // TODO: процент должен высчитываться программно, независимо от конкретного случая значений ширины SVG и SVG unit
   const strokeWidthUnit = svgWidth * 0.06
 
   return strokeWidthInPx / (strokeWidthUnit * devicePixelRatio)
@@ -50,6 +52,7 @@ export const WindParticles = memo(forwardRef(
         const newXScaleFactor = ((newWindParticlesWidth) / windParticlesWidth() + getAdditionToScaleFactor(svgWidth))
         windParticlesNodeRef.current.style.transform = `scale(${newXScaleFactor}, 1) translate(0px, 0)`
 
+        // TODO: процент должен высчитываться программно, независимо от конкретного случая значений ширины SVG и SVG unit
         // Горизонтальный центр windParticles должен совпадать с горизонтальным центром scaleToElement
         const xTranslation = (-windParticlesX() - (windParticlesWidth() - newWindParticlesWidth) / 2) / (svgWidth * 0.014933349609375 * newXScaleFactor)
         windParticlesNodeRef.current.style.transform = `scale(${newXScaleFactor}, 1) translate(${xTranslation}px)`
