@@ -1,4 +1,5 @@
-import { forwardRef, useEffect } from "react"
+import { forwardRef, useEffect, useImperativeHandle } from "react"
+import { getUserUnitInPx } from "../../utils/getUserUnitInPx"
 
 function defineRaindropPartsStrokeDash(raindropParts: SVGGElement, raindropTotalLength: number) {
   const strokeDashLength = raindropTotalLength / raindropParts.children.length
@@ -16,43 +17,43 @@ function defineRaindropPartsStrokeDash(raindropParts: SVGGElement, raindropTotal
 }
 
 function moveRaindropPartsTo(raindropParts: SVGGElement, coord: {x: number, y: number}) {
-  let userUnit: number | null = null
-  const CTM = raindropParts.getCTM()
+  let userUnit: number | void = getUserUnitInPx(raindropParts)
+  
+  const raindropPartsBoundingClientRect = raindropParts.getBoundingClientRect()
+  const xAxisDistance: number = coord.x - raindropPartsBoundingClientRect.x - raindropPartsBoundingClientRect.width / 2
+  const yAxisDistance: number = coord.y - raindropPartsBoundingClientRect.y - raindropPartsBoundingClientRect.height
 
-  if (CTM) {
-    userUnit = CTM.a
-  } else {
-    throw("raindropParts CTM is null")
-  }
-
-  const xAxisDistance: number = coord.x - raindropParts.getBoundingClientRect().x - raindropParts.getBoundingClientRect().width / 2
-
-  raindropParts.style.transform = `translate(${xAxisDistance / userUnit}, 0)`
+  raindropParts.style.transform = `translate(${xAxisDistance / userUnit}px, ${yAxisDistance / userUnit}px)`
 }
 
 export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGGElement>) {
 
+  console.log(new SVGImageElement())
+
   useEffect(() => {
     
-    try {
-
       if (ref && "current" in ref && ref.current) {
-        const raindropContainers = ref.current.querySelectorAll(".raindrop-container")
 
-        raindropContainers.forEach(raindropContainer => {
-          const raindrop: SVGPathElement | null = raindropContainer.querySelector(".raindrop")
-          const raindropParts: SVGGElement | null = raindropContainer.querySelector(".raindrop-parts")
+        try {
+          const raindropContainers = ref.current.querySelectorAll(".raindrop-container")
 
-          if (raindrop && raindropParts) {
-            defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
-            moveRaindropPartsTo(raindropParts, { x: raindrop.getBoundingClientRect().x, y: raindrop.getBoundingClientRect().y })
-          }
-        })
+          raindropContainers.forEach(raindropContainer => {
+            const raindrop: SVGPathElement | null = raindropContainer.querySelector(".raindrop")
+            const raindropParts: SVGGElement | null = raindropContainer.querySelector(".raindrop-parts")
+
+            if (raindrop && raindropParts) {
+              defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
+
+              const raindropBoundingClientRect = raindrop.getBoundingClientRect()
+              
+              moveRaindropPartsTo(raindropParts, { x: raindropBoundingClientRect.x + raindropBoundingClientRect.width / 2, y: raindropBoundingClientRect.y + raindropBoundingClientRect.height })
+            }
+          })
+        } catch(e) {
+          console.log(e)
+        }
+
       }
-
-    } catch(e) {
-      console.log(e)
-    }
 
   }, [])
 

@@ -1,14 +1,17 @@
+import { getUserUnitInPx } from "../../../utils/getUserUnitInPx"
 import "./rainAnimation.css"
 
 function getYTranslateCorrection() {
   return navigator.userAgent.includes("Firefox") ? 0.5 : -1
 }
 
-function fallAnimation<T extends SVGElement>(raindrop: T, fallCoord: number, svgWidth: number) {
+function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: number, svgWidth: number) {
   const raindropCoord = raindrop.getBoundingClientRect().y
   const raindropHeight = raindrop.getBoundingClientRect().height
+  
+  const userUnit: number | void = getUserUnitInPx(raindrop)
 
-  raindrop.style.setProperty('--translate-y', `${(fallCoord - (raindropCoord + raindropHeight)) / (svgWidth * 0.01647207059) + getYTranslateCorrection()}px`)
+  raindrop.style.setProperty('--translate-y', `${(fallCoord - (raindropCoord + raindropHeight)) / userUnit + getYTranslateCorrection()}px`)
 
   raindrop.classList.add("animation-fall")
 }
