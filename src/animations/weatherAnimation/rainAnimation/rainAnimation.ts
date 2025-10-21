@@ -5,26 +5,36 @@ function getYTranslateCorrection() {
   return navigator.userAgent.includes("Firefox") ? 0.5 : -1
 }
 
-function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: number, svgWidth: number) {
+function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: number) {
   const raindropCoord = raindrop.getBoundingClientRect().y
   const raindropHeight = raindrop.getBoundingClientRect().height
   
-  const userUnit: number | void = getUserUnitInPx(raindrop)
+  const userUnit: number = getUserUnitInPx(raindrop)
 
   raindrop.style.setProperty('--translate-y', `${(fallCoord - (raindropCoord + raindropHeight)) / userUnit + getYTranslateCorrection()}px`)
-
   raindrop.classList.add("animation-fall")
 }
 
-function splashAnimation<T extends SVGGElement>(raindropParts: T) {
-  
+function splashAnimation(raindropParts: SVGGElement) {
+
+  for (let i = 0; i < raindropParts.children.length; i++) {
+    const raindropPart = raindropParts.children[i]
+
+    if (!(raindropPart instanceof SVGPathElement)) {
+      throw ("raindropPart expected to be of type SVGPathElement")
+    }
+
+    raindropPart.style.setProperty("--stroke-dashoffset", "28px")
+  }
+
+  raindropParts.classList.add("animation-some")
 }
 
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export function rainAnimation<T extends SVGElement>(rain: T, fallCoord: number, svgWidth: number) {
+export function rainAnimation(rain: SVGGElement, fallCoord: number) {
 
   return async (resolve: (value: void) => void) => {
     let lastAnimatedElement: (Object & SVGElement) | null = null
@@ -41,11 +51,10 @@ export function rainAnimation<T extends SVGElement>(rain: T, fallCoord: number, 
         throw ("raindropParts expected to be of type SVGGElement")
       }
 
+      fallAnimation(raindrop, fallCoord)
       raindrop.onanimationend = () => {
         splashAnimation(raindropParts)
       }
-
-      fallAnimation(raindrop, fallCoord, svgWidth)
 
       if (i != 0) await sleep(200)
 

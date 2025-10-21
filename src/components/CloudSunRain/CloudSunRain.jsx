@@ -98,7 +98,7 @@ export const CloudSunRain = memo(
         const animationDuration = calculateAnimationDuration(windspeed)
 
         setTimeout(() => {
-          weatherAnimation([])
+          weatherAnimation([rainAnimation(rain, computeRainAnimationFallCoord())])
         }, 1000)
       }
 
