@@ -8,8 +8,8 @@
   --stroke-dashoffset: none;
 }
 
-.raindrop-parts.animation-some .raindrop-part {
-  animation: animation-some 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
+.raindrop-parts.animation-break-off .raindrop-part {
+  animation: animation-break-off 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
 }
 
 @keyframes animation-fall {
@@ -25,8 +25,7 @@
 
 }
 
-
-@keyframes animation-some {
+@keyframes animation-break-off {
 
   to {
     stroke-dashoffset: var(--stroke-dashoffset);

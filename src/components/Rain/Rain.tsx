@@ -44,7 +44,7 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
 
               const raindropBoundingClientRect = raindrop.getBoundingClientRect()
               
-              moveRaindropPartsTo(raindropParts, { x: raindropBoundingClientRect.x + raindropBoundingClientRect.width / 2, y: raindropBoundingClientRect.y + raindropBoundingClientRect.height })
+              //moveRaindropPartsTo(raindropParts, { x: raindropBoundingClientRect.x + raindropBoundingClientRect.width / 2, y: raindropBoundingClientRect.y + raindropBoundingClientRect.height })
             }
           })
         } catch(e) {
@@ -133,8 +133,8 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
       </g>
 
       <g className="raindrop-container" transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
-        <path className="raindrop" opacity={0} d="M 15,0 V 22.7913" />     
-        <g className="raindrop-parts">
+        <path className="raindrop" opacity={1} d="M 15,0 V 22.7913" />     
+        <g className="raindrop-parts" transform="translate(12.2579, 11.1121)" >
           <path className="raindrop-part lower-raindrop-part"
             d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
             transform="translate(0, -40.611)"

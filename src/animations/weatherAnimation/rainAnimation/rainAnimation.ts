@@ -24,10 +24,10 @@ function splashAnimation(raindropParts: SVGGElement) {
       throw ("raindropPart expected to be of type SVGPathElement")
     }
 
-    raindropPart.style.setProperty("--stroke-dashoffset", "28px")
+    raindropPart.style.setProperty("--stroke-dashoffset", `${raindropPart.getTotalLength()}px`)
   }
 
-  raindropParts.classList.add("animation-some")
+  raindropParts.classList.add("animation-break-off")
 }
 
 function sleep(ms: number) {
