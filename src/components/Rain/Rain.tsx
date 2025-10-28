@@ -1,30 +1,6 @@
-import { forwardRef, useEffect, useImperativeHandle } from "react"
+import { forwardRef, useEffect } from "react"
 import { getUserUnitInPx } from "../../utils/getUserUnitInPx"
 
-function defineRaindropPartsStrokeDash(raindropParts: SVGGElement, raindropTotalLength: number) {
-  const strokeDashLength = raindropTotalLength / raindropParts.children.length
-
-  for (let i = 0; i < raindropParts.children.length; i++) {
-    const raindropPart = raindropParts.children[i]
-
-    if (!(raindropPart instanceof SVGPathElement)) {
-      throw ("raindropPart is expected to be of type SVGPathElement")
-    }
-
-    raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`
-    raindropPart.style.strokeDashoffset = `${strokeDashLength}`
-  }
-}
-
-function moveRaindropPartsTo(raindropParts: SVGGElement, coord: {x: number, y: number}) {
-  let userUnit: number = getUserUnitInPx(raindropParts)
-  
-  const raindropPartsBoundingClientRect = raindropParts.getBoundingClientRect()
-  const xAxisDistance: number = coord.x - raindropPartsBoundingClientRect.x - raindropPartsBoundingClientRect.width / 2
-  const yAxisDistance: number = coord.y - raindropPartsBoundingClientRect.y - raindropPartsBoundingClientRect.height
-
-  raindropParts.style.transform = `translate(${xAxisDistance / userUnit}px, ${yAxisDistance / userUnit}px)`
-}
 
 export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGGElement>) {
 
@@ -40,11 +16,13 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
             const raindropParts: SVGGElement | null = raindropContainer.querySelector(".raindrop-parts")
 
             if (raindrop && raindropParts) {
-              defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
+              // defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
 
               const raindropBoundingClientRect = raindrop.getBoundingClientRect()
               
-              //moveRaindropPartsTo(raindropParts, { x: raindropBoundingClientRect.x + raindropBoundingClientRect.width / 2, y: raindropBoundingClientRect.y + raindropBoundingClientRect.height })
+              // moveRaindropPartsTo(raindropParts, { x: raindropBoundingClientRect.x + raindropBoundingClientRect.width / 2, y: raindropBoundingClientRect.y + raindropBoundingClientRect.height })
+
+              console.log(raindropParts.getBoundingClientRect().x, raindropParts.getBoundingClientRect().y)
             }
           })
         } catch(e) {
@@ -54,6 +32,14 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
       }
 
   }, [])
+
+  function changeCoordsBy(xAmount: number, yAmount: number, dValue: string) {
+    console.log(dValue.replace(/(?<xValue>-?[0-9]+\.?[[0-9]+]?),(?<yValue>-?[0-9]+\.?[[0-9]+]?)/g, (match, xValue: string, yValue: string) => {
+      return `${(+xValue + xAmount)},${yValue}`
+    }))
+  }
+
+  changeCoordsBy(14.468, 9.0602, "m -17.653559,42.247221 c 8.8168165,-0.04943 17.9396591,1.442481 18.14407356,8.504476")
 
   return (
     <g
@@ -110,7 +96,7 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
         </g>
       </g>
 
-      <g className="raindrop-container" display={"none"} transform="matrix(1.1024306,0,0,1.1024306,11.401336, 78.242495)">
+      <g className="raindrop-container" transform="matrix(1.1024306,0,0,1.1024306,11.401336, 78.242495)">
         <path className="raindrop" d="M 15,0 V 19.1942" />
         <g className="raindrop-parts">
           <path className="lower-raindrop-part"
@@ -129,26 +115,43 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
             d="M 19.516145,37.738157 C 10.687084,37.868028 0.19122613,41.837093 0.44840134,50.514656"
             transform="translate(0, -40.611)"
           />
+
+          {/* <path className="lower-raindrop-part"
+            d="m -3.1855590000000014,42.247221 c 8.8168165,-0.04943 17.9396591,1.442481 18.14407356,8.504476"
+            transform="translate(0, -40.611)"
+          />
+          <path className="higher-raindrop-part"
+            d="M -18.439813,37.738144 C -9.6107517,37.868015 0.88511616,41.83708 0.62794122,50.514643"
+            transform="translate(0, -40.611)"
+          />
+          <path className="lower-raindrop-part"
+            d="M 33.197891,42.247233 C 24.3810744,42.197805 15.25824282,43.689715 15.05382791,50.751709"
+            transform="translate(0, -40.611)"
+          />
+          <path className="higher-raindrop-part"
+            d="M 19.516145,37.738157 C 10.687084,37.868028 0.19122613,41.837093 0.44840134,50.514656"
+            transform="translate(0, -40.611)"
+          /> */}
         </g>
       </g>
 
-      <g className="raindrop-container" transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
+      <g className="raindrop-container" display={"none"} transform="matrix(1.1024306,0,0,1.1024306,18.01592,78.242495)">
         <path className="raindrop" opacity={1} d="M 15,0 V 22.7913" />     
-        <g className="raindrop-parts" transform="translate(12.2579, 11.1121)" >
+        <g className="raindrop-parts">
           <path className="raindrop-part lower-raindrop-part"
-            d="M-17.466 42.848c9.796-.055 19.933 1.603 20.16 9.45"
+            d="M-5.2081 53.9601c9.796-.055 19.933 1.603 20.16 9.45"
             transform="translate(0, -40.611)"
           />
           <path className="raindrop-part higher-raindrop-part"
-            d="M-18.34 37.838c9.81.144 21.472 4.554 21.186 14.196"
+            d="M-6.0821 48.9501c9.81.144 21.472 4.554 21.186 14.196"
             transform="translate(0, -40.611)"
           />
           <path className="raindrop-part lower-raindrop-part"
-            d="M22.96 42.848c-9.797-.055-19.933 1.603-20.16 9.45"
+            d="M35.2179 53.9601c-9.797-.055-19.933 1.603-20.16 9.45"
             transform="translate(0, -40.611)"
           />
           <path className="raindrop-part higher-raindrop-part"
-            d="M23.833 37.838c-9.81.144-21.472 4.554-21.186 14.196"
+            d="M36.0909 48.9501c-9.81.144-21.472 4.554-21.186 14.196"
             transform="translate(0, -40.611)"
           />
         </g>
@@ -157,3 +160,28 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
     </g>
   )
 })
+
+function defineRaindropPartsStrokeDash(raindropParts: SVGGElement, raindropTotalLength: number) {
+  const strokeDashLength = raindropTotalLength / raindropParts.children.length
+
+  for (let i = 0; i < raindropParts.children.length; i++) {
+    const raindropPart = raindropParts.children[i]
+
+    if (!(raindropPart instanceof SVGPathElement)) {
+      throw ("raindropPart is expected to be of type SVGPathElement")
+    }
+
+    raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`
+    raindropPart.style.strokeDashoffset = `${strokeDashLength}`
+  }
+}
+
+function moveRaindropPartsTo(raindropParts: SVGGElement, coord: { x: number, y: number }) {
+  let userUnit: number = getUserUnitInPx(raindropParts)
+
+  const raindropPartsBoundingClientRect = raindropParts.getBoundingClientRect()
+  const xAxisDistance: number = coord.x - raindropPartsBoundingClientRect.x - raindropPartsBoundingClientRect.width / 2
+  const yAxisDistance: number = coord.y - raindropPartsBoundingClientRect.y - raindropPartsBoundingClientRect.height
+
+  raindropParts.style.transform = `translate(${xAxisDistance / userUnit}px, ${yAxisDistance / userUnit}px)`
+}

@@ -44,11 +44,11 @@ export function rainAnimation(rain: SVGGElement, fallCoord: number) {
       const raindropParts = rain.children[i].children[1]
 
       if (!(raindrop instanceof SVGPathElement)) {
-        throw ("raindrop expected to be of type SVGPathElement")
+        throw("raindrop expected to be of type SVGPathElement")
       }
 
       if (!(raindropParts instanceof SVGGElement)) {
-        throw ("raindropParts expected to be of type SVGGElement")
+        throw("raindropParts expected to be of type SVGGElement")
       }
 
       fallAnimation(raindrop, fallCoord)

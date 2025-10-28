@@ -1,4 +1,4 @@
-.raindrop.animation-fall {
+.animation-fall {
   --translate-y: none;
 
   animation: animation-fall 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
@@ -9,7 +9,7 @@
 }
 
 .raindrop-parts.animation-break-off .raindrop-part {
-  animation: animation-break-off 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
+  animation: animation-break-off 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
 }
 
 @keyframes animation-fall {
