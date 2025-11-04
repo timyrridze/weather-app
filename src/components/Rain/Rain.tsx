@@ -1,6 +1,6 @@
 import { forwardRef, useEffect } from "react"
+import { Decimal } from "decimal.js"
 import { getUserUnitInPx } from "../../utils/getUserUnitInPx"
-
 
 export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGGElement>) {
 
@@ -16,13 +16,13 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
             const raindropParts: SVGGElement | null = raindropContainer.querySelector(".raindrop-parts")
 
             if (raindrop && raindropParts) {
-              // defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
+              //defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
 
               const raindropBoundingClientRect = raindrop.getBoundingClientRect()
               
-              // moveRaindropPartsTo(raindropParts, { x: raindropBoundingClientRect.x + raindropBoundingClientRect.width / 2, y: raindropBoundingClientRect.y + raindropBoundingClientRect.height })
+              //moveRaindropPartsTo(raindropParts, { x: raindropBoundingClientRect.x + raindropBoundingClientRect.width / 2, y: raindropBoundingClientRect.y + raindropBoundingClientRect.height })
 
-              console.log(raindropParts.getBoundingClientRect().x, raindropParts.getBoundingClientRect().y)
+              //console.log(raindropParts.getBoundingClientRect().x, raindropParts.getBoundingClientRect().y)
             }
           })
         } catch(e) {
@@ -33,13 +33,13 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
 
   }, [])
 
-  function changeCoordsBy(xAmount: number, yAmount: number, dValue: string) {
+  function changeCoordsBy(dValue: string, xChange: number, yChange: number) {
     console.log(dValue.replace(/(?<xValue>-?[0-9]+\.?[[0-9]+]?),(?<yValue>-?[0-9]+\.?[[0-9]+]?)/g, (match, xValue: string, yValue: string) => {
-      return `${(+xValue + xAmount)},${yValue}`
+      return `${new Decimal(+xValue).plus(new Decimal(xChange))},${new Decimal(+yValue).plus(new Decimal(yChange))}`
     }))
   }
 
-  changeCoordsBy(14.468, 9.0602, "m -17.653559,42.247221 c 8.8168165,-0.04943 17.9396591,1.442481 18.14407356,8.504476")
+  changeCoordsBy("m -17.840921,41.646211 c 7.83717,-0.04394 15.9463633,1.282206 16.1280651,7.559535", 14.468, 9.0602)
 
   return (
     <g
@@ -100,38 +100,21 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
         <path className="raindrop" d="M 15,0 V 19.1942" />
         <g className="raindrop-parts">
           <path className="lower-raindrop-part"
-            d="m -17.653559,42.247221 c 8.8168165,-0.04943 17.9396591,1.442481 18.14407356,8.504476"
+            d="m -3.185559,51.307421 c 8.8168165,-0.04943 17.9396591,1.442481 18.14407356,8.504476"
             transform="translate(0, -40.611)"
           />
           <path className="higher-raindrop-part"
-            d="M -18.439813,37.738144 C -9.6107517,37.868015 0.88511616,41.83708 0.62794122,50.514643"
+            d="M -3.971813,46.798344 C 4.8572483,46.928215 15.35311616,50.89728 15.09594122,59.574843"
             transform="translate(0, -40.611)"
           />
           <path className="lower-raindrop-part"
-            d="M 18.729891,42.247233 C 9.9130744,42.197805 0.79024282,43.689715 0.58582791,50.751709"
+            d="M 33.197891,51.307433 C 24.3810744,51.258005 15.25824282,52.749915 15.05382791,59.811909"
             transform="translate(0, -40.611)"
           />
           <path className="higher-raindrop-part"
-            d="M 19.516145,37.738157 C 10.687084,37.868028 0.19122613,41.837093 0.44840134,50.514656"
+            d="M 33.984145,46.798357 C 25.155084,46.928228 14.65922613,50.897293 14.91640134,59.574856"
             transform="translate(0, -40.611)"
           />
-
-          {/* <path className="lower-raindrop-part"
-            d="m -3.1855590000000014,42.247221 c 8.8168165,-0.04943 17.9396591,1.442481 18.14407356,8.504476"
-            transform="translate(0, -40.611)"
-          />
-          <path className="higher-raindrop-part"
-            d="M -18.439813,37.738144 C -9.6107517,37.868015 0.88511616,41.83708 0.62794122,50.514643"
-            transform="translate(0, -40.611)"
-          />
-          <path className="lower-raindrop-part"
-            d="M 33.197891,42.247233 C 24.3810744,42.197805 15.25824282,43.689715 15.05382791,50.751709"
-            transform="translate(0, -40.611)"
-          />
-          <path className="higher-raindrop-part"
-            d="M 19.516145,37.738157 C 10.687084,37.868028 0.19122613,41.837093 0.44840134,50.514656"
-            transform="translate(0, -40.611)"
-          /> */}
         </g>
       </g>
 
