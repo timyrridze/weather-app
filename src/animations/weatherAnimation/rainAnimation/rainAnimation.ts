@@ -5,6 +5,16 @@ function getYTranslateCorrection() {
   return navigator.userAgent.includes("Firefox") ? 0.5 : -1
 }
 
+function moveRaindropPartsTo(raindropParts: SVGGElement, coord: { x: number, y: number }) {
+  let userUnit: number = getUserUnitInPx(raindropParts)
+
+  const raindropPartsBoundingClientRect = raindropParts.getBoundingClientRect()
+  const xAxisDistance: number = coord.x - raindropPartsBoundingClientRect.x - raindropPartsBoundingClientRect.width / 2
+  const yAxisDistance: number = coord.y - raindropPartsBoundingClientRect.y - raindropPartsBoundingClientRect.height
+
+  raindropParts.style.transform = `translate(${xAxisDistance / userUnit}px, ${yAxisDistance / userUnit}px)`
+}
+
 function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: number) {
   const raindropCoord = raindrop.getBoundingClientRect().y
   const raindropHeight = raindrop.getBoundingClientRect().height
@@ -52,6 +62,7 @@ export function rainAnimation(rain: SVGGElement, fallCoord: number) {
       }
 
       fallAnimation(raindrop, fallCoord)
+      // moveRaindropPartsTo(raindropParts, )
       raindrop.onanimationend = () => {
         splashAnimation(raindropParts)
       }
