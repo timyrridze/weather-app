@@ -1,49 +1,6 @@
 import { getUserUnitInPx } from "../../../utils/getUserUnitInPx"
 import "./rainAnimation.css"
 
-function getYTranslateCorrection() {
-  return navigator.userAgent.includes("Firefox") ? 0.5 : -1
-}
-
-function moveRaindropPartsTo(raindropParts: SVGGElement, coord: { x: number, y: number }) {
-  let userUnit: number = getUserUnitInPx(raindropParts)
-
-  const raindropPartsBoundingClientRect = raindropParts.getBoundingClientRect()
-  const xAxisDistance: number = coord.x - raindropPartsBoundingClientRect.x - raindropPartsBoundingClientRect.width / 2
-  const yAxisDistance: number = coord.y - raindropPartsBoundingClientRect.y - raindropPartsBoundingClientRect.height
-
-  raindropParts.style.transform = `translate(${xAxisDistance / userUnit}px, ${yAxisDistance / userUnit}px)`
-}
-
-function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: number) {
-  const raindropCoord = raindrop.getBoundingClientRect().y
-  const raindropHeight = raindrop.getBoundingClientRect().height
-  
-  const userUnit: number = getUserUnitInPx(raindrop)
-
-  raindrop.style.setProperty('--translate-y', `${(fallCoord - (raindropCoord + raindropHeight)) / userUnit + getYTranslateCorrection()}px`)
-  raindrop.classList.add("animation-fall")
-}
-
-function splashAnimation(raindropParts: SVGGElement) {
-
-  for (let i = 0; i < raindropParts.children.length; i++) {
-    const raindropPart = raindropParts.children[i]
-
-    if (!(raindropPart instanceof SVGPathElement)) {
-      throw ("raindropPart expected to be of type SVGPathElement")
-    }
-
-    raindropPart.style.setProperty("--stroke-dashoffset", `${raindropPart.getTotalLength()}px`)
-  }
-
-  raindropParts.classList.add("animation-break-off")
-}
-
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
 export function rainAnimation(rain: SVGGElement, fallCoord: number) {
 
   return async (resolve: (value: void) => void) => {
@@ -62,9 +19,10 @@ export function rainAnimation(rain: SVGGElement, fallCoord: number) {
       }
 
       fallAnimation(raindrop, fallCoord)
-      // moveRaindropPartsTo(raindropParts, )
+      moveRaindropPartsTo(raindropParts, fallCoord)
+
       raindrop.onanimationend = () => {
-        splashAnimation(raindropParts)
+        breakOffAnimation(raindropParts)
       }
 
       if (i != 0) await sleep(200)
@@ -75,4 +33,46 @@ export function rainAnimation(rain: SVGGElement, fallCoord: number) {
     if (lastAnimatedElement) lastAnimatedElement.onanimationend = () => resolve()
   }
   
+}
+
+function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: number) {
+  const raindropCoord = raindrop.getBoundingClientRect().y
+  const raindropHeight = raindrop.getBoundingClientRect().height
+
+  const userUnit: number = getUserUnitInPx(raindrop)
+
+  raindrop.style.setProperty('--translate-y', `${(fallCoord - (raindropCoord + raindropHeight)) / userUnit + getYTranslateCorrection()}px`)
+  raindrop.classList.add("animation-fall")
+}
+
+function breakOffAnimation(raindropParts: SVGGElement) {
+
+  for (let i = 0; i < raindropParts.children.length; i++) {
+    const raindropPart = raindropParts.children[i]
+
+    if (!(raindropPart instanceof SVGPathElement)) {
+      throw ("raindropPart expected to be of type SVGPathElement")
+    }
+
+    raindropPart.style.setProperty("--stroke-dashoffset", `${raindropPart.getTotalLength()}px`)
+  }
+
+  raindropParts.classList.add("animation-break-off")
+}
+
+function moveRaindropPartsTo(raindropParts: SVGGElement, y: number) {
+  let userUnit: number = getUserUnitInPx(raindropParts)
+
+  const raindropPartsBoundingClientRect = raindropParts.getBoundingClientRect()
+  const yAxisDistance: number = y - raindropPartsBoundingClientRect.y - raindropPartsBoundingClientRect.height
+
+  raindropParts.style.transform = `translate(0, ${yAxisDistance / userUnit + getYTranslateCorrection()}px)`
+}
+
+function getYTranslateCorrection() {
+  return navigator.userAgent.includes("Firefox") ? 0.5 : -1
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }

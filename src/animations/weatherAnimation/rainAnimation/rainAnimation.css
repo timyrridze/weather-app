@@ -6,10 +6,12 @@
 
 .raindrop-part {
   --stroke-dashoffset: none;
+
+  visibility: hidden;
 }
 
 .raindrop-parts.animation-break-off .raindrop-part {
-  animation: animation-break-off 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
+  animation: animation-break-off 0.48s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
 }
 
 @keyframes animation-fall {
@@ -27,7 +29,16 @@
 
 @keyframes animation-break-off {
 
-  to {
+  0% {
+    visibility: visible;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
     stroke-dashoffset: var(--stroke-dashoffset);
   }
 

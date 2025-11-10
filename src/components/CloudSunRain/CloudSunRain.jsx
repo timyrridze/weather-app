@@ -16,7 +16,7 @@ export const CloudSunRain = memo(
   function CloudSunRain({ width, animating = false, computeRainAnimationFallCoord }) {
     const weather = useContext(WeatherContext)
     
-    const windParticlesNodeRef = useRef()
+    const windParticlesRef = useRef()
     const cloudRef = useRef()
     const sunRef = useRef()
     const rainRef = useRef()
@@ -27,7 +27,7 @@ export const CloudSunRain = memo(
     const mainLayer = (
       <g id="layer1-50" transform="translate(-137.18711,-24.974114)">
 
-        <WindParticles ref={windParticlesNodeRef} y={70} svgWidth={width} scaleToElement={".MainContent"} />
+        <WindParticles ref={windParticlesRef} y={70} svgWidth={width} scaleToElement={".MainContent"} />
 
         <g id="cloud" ref={cloudRef}>
           <g id="g17-0" 
@@ -89,7 +89,7 @@ export const CloudSunRain = memo(
     useEffect(() => {
 
       if (animating === true && weather) {
-        const windParticles = windParticlesNodeRef.current
+        const windParticles = windParticlesRef.current
         const cloud = cloudRef.current
         const sun = sunRef.current
         const rain = rainRef.current
