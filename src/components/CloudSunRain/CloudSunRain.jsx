@@ -8,12 +8,12 @@ import { calculateAnimationDuration } from "../../animations/weatherAnimation/ca
 import { cloudAnimation } from "../../animations/weatherAnimation/cloudAnimation/cloudAnimation"
 import { sunAnimation } from "../../animations/weatherAnimation/sunAnimation/sunAnimation"
 import { windAnimation } from "../../animations/weatherAnimation/windAnimation/windAnimation"
-import { rainAnimation } from "../../animations/weatherAnimation/rainAnimation/rainAnimation"
+import { rainAnimation } from "../Rain/animation/rainAnimation"
 
 
 export const CloudSunRain = memo( 
 
-  function CloudSunRain({ width, animating = false, computeRainAnimationFallCoord }) {
+  function CloudSunRain({ width, animating = false, getRainAnimationFallCoord }) {
     const weather = useContext(WeatherContext)
     
     const windParticlesRef = useRef()
@@ -98,7 +98,7 @@ export const CloudSunRain = memo(
         const animationDuration = calculateAnimationDuration(windspeed)
 
         setTimeout(() => {
-          weatherAnimation([rainAnimation(rain, computeRainAnimationFallCoord())])
+          weatherAnimation([rainAnimation(rain, getRainAnimationFallCoord())])
         }, 1000)
       }
 

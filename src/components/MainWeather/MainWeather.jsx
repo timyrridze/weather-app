@@ -3,7 +3,8 @@ import {CloudSunRain} from "../CloudSunRain/CloudSunRain.jsx"
 
 
 export function MainWeather() {
-  const computeRainAnimationCoord = () => {
+
+  const getRainAnimationCoord = () => {
     return window.innerHeight
   }
 
@@ -11,7 +12,7 @@ export function MainWeather() {
 
     <div className="MainWeather">
 
-      <CloudSunRain width={304} animating={true} computeRainAnimationFallCoord={computeRainAnimationCoord}/>
+      <CloudSunRain width={235} animating={true} getRainAnimationFallCoord={getRainAnimationCoord}/>
 
     </div>  
     
