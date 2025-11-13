@@ -16,7 +16,7 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
   }
 
   return async (resolve: (value: void) => void) => {
-    let lastRaindropParts: (Object & SVGElement) | null = null
+    let lastRaindropParts: SVGGElement | null = null
 
     for (let i = rain.children.length - 1; i >= 0; i--) {
       const raindrop = rain.children[i].children[0]
@@ -31,7 +31,8 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
       }
 
       fallAnimation(raindrop, fallCoord).then(() => {
-        // moveToFallCoord(raindrop, fallCoord)
+        makeInvisible(raindrop)
+        moveToFallCoord(raindrop, fallCoord)
         moveToFallCoord(raindropParts, fallCoord)
         breakOffAnimation(raindropParts)
       })
@@ -41,7 +42,9 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
       lastRaindropParts = raindropParts
     }
 
-    // if (lastRaindropParts) lastRaindropParts.onanimationend = () => 
+    if (lastRaindropParts) await waitAnimationEnd(lastRaindropParts)
+   
+
   }
   
 }
@@ -80,29 +83,47 @@ function breakOffAnimation(raindropParts: SVGGElement) {
 
     raindropPart.onanimationend = () => {
       raindropPart.style.removeProperty("--stroke-dashoffset")
-      raindropParts.classList.remove("animation-break-off")
     }
   }
 
   raindropParts.classList.add("animation-break-off")
 
-}
-
-function fadeInAnimation(rain: SVGGElement) {
-  for (let i = rain.children.length - 1; i >= 0; i--) {
-    const raindrop = rain.children[i].children[0] 
-
-    // raindrop
+  raindropParts.onanimationend = () => {
+    raindropParts.classList.remove("animation-break-off")
   }
 }
 
-function moveToFallCoord(Element: SVGGElement, fallCoord: FallCoord) {
-  let userUnit: number = getUserUnitInPx(Element)
+function fadeInAnimation(raindrop: SVGPathElement) {
+  
+}
 
-  const raindropPartsBoundingClientRect = Element.getBoundingClientRect()
-  const yAxisDistance: number = fallCoord.value - raindropPartsBoundingClientRect.y - raindropPartsBoundingClientRect.height
+function moveToFallCoord(element: SVGGElement, fallCoord: FallCoord) {
+  let userUnit: number = getUserUnitInPx(element)
 
-  Element.style.transform = `translateY(${yAxisDistance / userUnit + fallCoord.correction}px)`
+  const elementBoundingClientRect = element.getBoundingClientRect()
+  const yAxisDistance: number = fallCoord.value - elementBoundingClientRect.y - elementBoundingClientRect.height
+
+  element.style.transform = `translateY(${yAxisDistance / userUnit + fallCoord.correction}px)`
+}
+
+function waitAnimationEnd(element: SVGGraphicsElement) {
+
+  return new Promise((resolve) => {
+    if (element.getAnimations({ subtree: true }).length !== 0) {
+
+      element.onanimationend = () => {
+        resolve(null)
+      }
+        
+    } else {
+      resolve(null)
+    }
+  })
+
+}
+
+function makeInvisible(element: SVGGraphicsElement) {
+  element.classList.add("invisible")
 }
 
 function wait(ms: number) {
