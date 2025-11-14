@@ -15,7 +15,7 @@
 }
 
 .raindrop-parts.animation-break-off .raindrop-part {
-  animation: animation-break-off 0.48s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
+  animation: animation-break-off 1.48s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
 }
 
 @keyframes animation-fall {
@@ -46,4 +46,8 @@
     stroke-dashoffset: var(--stroke-dashoffset);
   }
 
+}
+
+@keyframes animation-fade-in {
+  
 }
