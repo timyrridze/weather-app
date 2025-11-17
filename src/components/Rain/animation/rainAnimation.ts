@@ -16,8 +16,9 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
   }
 
   return async (resolve: (value: void) => void) => {
+    const raindrops: SVGPathElement[] = []
     const animationPromises: Promise<null>[] = []
-    
+
     for (let i = rain.children.length - 1; i >= 0; i--) {
       const raindrop = rain.children[i].children[0]
       const raindropParts = rain.children[i].children[1]
@@ -29,6 +30,8 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
       if (!(raindropParts instanceof SVGGElement)) {
         throw("raindropParts expected to be of type SVGGElement")
       }
+
+      raindrops.push(raindrop)
 
       fallAnimation(raindrop, fallCoord).then(() => {
         makeInvisible(raindrop)
@@ -44,22 +47,15 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
     // Ждать пока закончатся все breakOffAnimation
     await Promise.all(animationPromises)
 
-    for (let i = rain.children.length - 1; i >= 0; i--) {
-      const raindrop = rain.children[i].children[0]
+    rain.children[0].children[0].remove()
 
-      
-    }
+    console.log(raindrops[3].classList)
   }
   
 }
 
-async function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: FallCoord) {
-  const raindropCoord: number = raindrop.getBoundingClientRect().y
-  const raindropHeight: number = raindrop.getBoundingClientRect().height
-
-  const userUnit: number = getUserUnitInPx(raindrop)
-
-  raindrop.style.setProperty('--translate-y', `${(fallCoord.value - (raindropCoord + raindropHeight)) / userUnit + fallCoord.correction}px`)
+async function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: FallCoord): Promise<null> {
+  raindrop.style.setProperty('--fall-y', `${getTranslationToFallCoord(raindrop, fallCoord)}px`)
   raindrop.classList.add("animation-fall")
 
   return await new Promise((resolve) => {
@@ -102,24 +98,29 @@ async function breakOffAnimation(raindropParts: SVGGElement): Promise<null> {
   
 }
 
-function fadeInAnimation(raindrop: SVGPathElement, yCoord: number) {
+function fadeInAnimation(raindrop: SVGPathElement, yCoord: number): void {
   raindrop.classList.add("animation-fade-in")
+
   raindrop.onanimationend = () => raindrop.classList.remove("animation-fade-in")
 }
 
-function moveToFallCoord(element: SVGGElement, fallCoord: FallCoord) {
+function moveToFallCoord(element: SVGGElement, fallCoord: FallCoord): void {
+  element.style.setProperty("--translate-y", `${getTranslationToFallCoord(element, fallCoord)}px`)
+}
+
+function makeInvisible(element: SVGGraphicsElement): void {
+  element.classList.add("invisible")
+}
+
+function getTranslationToFallCoord(element: SVGGraphicsElement, fallCoord: FallCoord) {
   let userUnit: number = getUserUnitInPx(element)
 
   const elementBoundingClientRect = element.getBoundingClientRect()
   const yAxisDistance: number = fallCoord.value - (elementBoundingClientRect.y + elementBoundingClientRect.height)
 
-  element.style.transform = `translateY(${yAxisDistance / userUnit + fallCoord.correction}px)`
+  return yAxisDistance / userUnit + fallCoord.correction
 }
 
-function makeInvisible(element: SVGGraphicsElement) {
-  element.classList.add("invisible")
-}
-
-function wait(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+function wait(ms: number): Promise<null> {
+  return new Promise(resolve => setTimeout(() => resolve.call(null, null), ms))
 }

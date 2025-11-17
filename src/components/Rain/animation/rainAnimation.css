@@ -3,9 +3,25 @@
 }
 
 .animation-fall {
-  --translate-y: none;
+  --fall-y: none;
 
   animation: animation-fall 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
+}
+
+.animation-fade-in {
+  --fade-in-y: none;
+
+  animation: animation-fade-in 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
+}
+
+.raindrop, .raindrop-parts {
+  --translate-y: 0;
+  
+  transform: translateY(var(--translate-y));
+}
+
+.raindrop-parts.animation-break-off .raindrop-part {
+  animation: animation-break-off 0.48s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
 }
 
 .raindrop-part {
@@ -14,19 +30,11 @@
   visibility: hidden;
 }
 
-.raindrop-parts.animation-break-off .raindrop-part {
-  animation: animation-break-off 1.48s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
-}
-
 @keyframes animation-fall {
 
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
+  to {
     visibility: hidden;
-    transform: translateY(var(--translate-y));
+    transform: translateY(var(--fall-y));
   }
 
 }
@@ -49,5 +57,17 @@
 }
 
 @keyframes animation-fade-in {
+  0% {
+    opacity: 0;
+    visibility: visible;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(var(--fade-in-y));
+  }
   
 }
