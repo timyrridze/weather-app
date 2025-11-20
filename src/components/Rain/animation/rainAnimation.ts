@@ -50,9 +50,7 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
     for (let i = 0; i < typedRaindrops.length; i++) {
       const raindrop = typedRaindrops[i]
 
-      console.log()
-
-      fadeInAnimation(raindrop, getTranslationToFallCoord(raindrop))
+      fadeInAnimation(raindrop, "0px")
 
       if (i != typedRaindrops.length - 1) await wait(ANIMATION_ITERATION_DELAY)
     }
@@ -95,27 +93,33 @@ async function breakOffAnimation(raindropParts: SVGGElement): Promise<null> {
   raindropParts.classList.add("animation-break-off")
 
   return await new Promise((resolve) => {
+
     raindropParts.onanimationend = () => {
       raindropParts.classList.remove("animation-break-off")
 
       resolve(null)
     }
+
   })
   
 }
 
-function fadeInAnimation(raindrop: SVGPathElement, yTranslation: string): void {
+async function fadeInAnimation(raindrop: SVGPathElement, yTranslation: string): Promise<null> {
   raindrop.classList.add("animation-fade-in")
 
-  raindrop.onanimationend = () => raindrop.classList.remove("animation-fade-in")
+  return await new Promise(resolve => {
+
+    raindrop.onanimationend = () => {
+      raindrop.classList.remove("animation-fade-in")
+
+      resolve(null)
+    }
+
+  })
 }
 
 function moveToFallCoord(element: SVGGraphicsElement, fallCoord: FallCoord): void {
   element.style.setProperty("--translate-y", computeTranslationToFallCoord(element, fallCoord))
-}
-
-function getTranslationToFallCoord(element: SVGGraphicsElement): string {
-  return element.style.getPropertyValue("--translate-y")
 }
 
 function computeTranslationToFallCoord(element: SVGGraphicsElement, fallCoord: FallCoord): string {
@@ -129,6 +133,14 @@ function computeTranslationToFallCoord(element: SVGGraphicsElement, fallCoord: F
 
 function makeInvisible(element: SVGGraphicsElement): void {
   element.classList.add("invisible")
+}
+
+function makeVisible(element: SVGGraphicsElement): void {
+  element.classList.remove("invisible")
+}
+
+function asyncOnAnimationEnd(element, callback) {
+  return new Promise()
 }
 
 function wait(ms: number): Promise<null> {
