@@ -11,7 +11,7 @@
 .animation-fade-in {
   --fade-in-y: none;
 
-  animation: animation-fade-in 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
+  animation: animation-fade-in 0.4s cubic-bezier(0.315, 0.78, 0.105, 0.97) 0s 1 normal forwards;
 }
 
 .raindrop, .raindrop-parts {
