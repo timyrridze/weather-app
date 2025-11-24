@@ -104,7 +104,7 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
       </g>
 
       <g className="raindrop-container" transform="matrix(1.1024306,0,0,1.1024306,18.01592, 78.242495)">
-        <path className="raindrop" opacity={1} d="M 15,0 V 22.7913" />     
+        <path className="raindrop" d="M 15,0 V 22.7913" />     
         <g className="raindrop-parts">
           <path className="raindrop-part lower-raindrop-part"
             d="M-5.2081 53.9601c9.796-.055 19.933 1.603 20.16 9.45"

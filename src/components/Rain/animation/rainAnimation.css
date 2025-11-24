@@ -10,7 +10,7 @@
 
 .animation-fade-in {
   --fade-in-y: none;
-
+/* TODO: Создать функцию, возвращающую обратную функцию Безье */
   animation: animation-fade-in 0.4s cubic-bezier(0.315, 0.78, 0.105, 0.97) 0s 1 normal forwards;
 }
 

@@ -34,20 +34,19 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
 
       typedRaindrops.push(raindrop)
 
-      animationPromises[i] = new Promise(resolve => {})
+      let animationPromiseResolver: Promise<null> | null = null
+      animationPromises[i] = new Promise<null>(resolve => { animationPromiseResolver = resolve })
 
       fallAnimation(raindrop, fallCoord).then(() => {
         makeInvisible(raindrop)
         moveToFallCoord(raindrop, fallCoord)
         moveToFallCoord(raindropParts, fallCoord)
 
-        animationPromises[i] = breakOffAnimation(raindropParts)
+        breakOffAnimation(raindropParts).then(() => animationPromiseResolver())
       })
 
       if (i != 0) await wait(ANIMATION_ITERATION_DELAY)
     }
-
-    console.log()
 
     // Ждать пока закончатся все breakOffAnimation
     await Promise.all(animationPromises)
