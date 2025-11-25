@@ -5,7 +5,7 @@ interface FallCoord {
   value: number,
   correction: number
 }
-type AnimationReturnType = Promise<null>
+type AnimationPromise = Promise<null>
 
 const ANIMATION_ITERATION_DELAY: number = 2000
 
@@ -67,7 +67,7 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
   
 }
 
-function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: FallCoord): AnimationReturnType {
+function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: FallCoord): AnimationPromise {
   raindrop.style.setProperty('--fall-y', computeTranslationToFallCoord(raindrop, fallCoord))
   raindrop.classList.add("animation-fall")
 
@@ -77,7 +77,7 @@ function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: Fal
   })
 }
 
-function breakOffAnimation(raindropParts: SVGGElement): AnimationReturnType {
+function breakOffAnimation(raindropParts: SVGGElement): AnimationPromise {
 
   for (let i = 0; i < raindropParts.children.length; i++) {
     const raindropPart = raindropParts.children[i]
@@ -96,12 +96,11 @@ function breakOffAnimation(raindropParts: SVGGElement): AnimationReturnType {
   raindropParts.classList.add("animation-break-off")
 
   return asyncOnAnimationEnd(raindropParts, () => { 
-    console.log("breakOff end")
     raindropParts.classList.remove("animation-break-off") 
   })
 }
 
-function fadeInAnimation(raindrop: SVGPathElement, yTranslation: string): AnimationReturnType {
+function fadeInAnimation(raindrop: SVGPathElement, yTranslation: string): AnimationPromise {
   raindrop.classList.add("animation-fade-in")
   raindrop.style.setProperty("--fade-in-y", yTranslation)
 
@@ -144,10 +143,19 @@ function makeVisible(element: SVGGraphicsElement): void {
   element.classList.remove("invisible")
 }
 
-function removeTranslation(element: SVGGraphicsElement) {
+function removeTranslation(element: SVGGraphicsElement): void {
   element.style.removeProperty("--translate-y")
 }
 
-function wait(ms: number): Promise<null> {
-  return new Promise(resolve => setTimeout(() => resolve.call(null, null), ms))
+function createAnimationQueue(): { 
+  queue: AnimationPromise[],
+  pushAnimationPromise: () => Parameters<PromiseConstructor>[0]
+} {
+
 }
+
+function wait(ms: number): Promise<null> {
+  return new Promise(resolve => setTimeout(() => resolve(null), ms))
+}
+
+createAnimationQueue()

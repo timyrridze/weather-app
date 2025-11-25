@@ -98,7 +98,6 @@ function SelectedCity({city, citiesElementRef}) {
   function handleClick() {
 
     toggleCities(citiesElementRef.current, clickTime, selectedCityClick)
-
     clickTime = performance.now()
 
   }
@@ -148,7 +147,6 @@ function SelectCity({ setWeather }) {
 
     ;(async () => {
       const weatherData = await fetchWeatherData(city)
-
       setWeather(weatherData)
     })()
 
@@ -159,7 +157,6 @@ function SelectCity({ setWeather }) {
     <div className="SelectCity">
 
       <SelectedCity city={city} citiesElementRef={citiesElementRef} />
-      
       <Cities setCity={setCity} citiesElementRef={citiesElementRef} />
 
     </div>
