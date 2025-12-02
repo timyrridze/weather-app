@@ -1,11 +1,12 @@
-import { getUserUnitInPx } from "../../../utils/getUserUnitInPx"
 import "./rainAnimation.css"
+import type { AnimationPromise } from "./types"
+import { getUserUnitInPx } from "../../../utils/getUserUnitInPx"
+import { createAnimationQueue } from "./createAnimationQueue"
 
 interface FallCoord {
   value: number,
   correction: number
 }
-type AnimationPromise = Promise<null>
 
 const ANIMATION_ITERATION_DELAY: number = 2000
 
@@ -18,7 +19,7 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
 
   return async (resolve: (value: void) => void) => {
     const typedRaindrops: SVGPathElement[] = []
-    const animationPromises: Promise<null>[] = []
+    const animationQueue = createAnimationQueue()
 
     for (let i = rain.children.length - 1; i >= 0; i--) {
       const raindrop = rain.children[i].children[0]
@@ -34,35 +35,36 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
 
       typedRaindrops.push(raindrop)
 
-      let animationPromiseResolver: Promise<null> | null = null
-      animationPromises[i] = new Promise<null>(resolve => { animationPromiseResolver = resolve })
-
       fallAnimation(raindrop, fallCoord).then(() => {
         makeInvisible(raindrop)
         moveToFallCoord(raindrop, fallCoord)
         moveToFallCoord(raindropParts, fallCoord)
 
-        breakOffAnimation(raindropParts).then(() => animationPromiseResolver())
+        const animationPromiseResolver = animationQueue.pushAnimationPromise()
+
+        breakOffAnimation(raindropParts).then(() => {
+          if (animationPromiseResolver) animationPromiseResolver(null)
+        })
       })
 
       if (i != 0) await wait(ANIMATION_ITERATION_DELAY)
     }
 
     // Ждать пока закончатся все breakOffAnimation
-    await Promise.all(animationPromises)
+    await Promise.all(animationQueue.queue)
 
     console.log("fadeIn start")
 
-    // for (let i = 0; i < typedRaindrops.length; i++) {
-    //   const raindrop = typedRaindrops[i]
+    for (let i = 0; i < typedRaindrops.length; i++) {
+      const raindrop = typedRaindrops[i]
 
-    //   fadeInAnimation(raindrop, "0px").then(() => {
-    //     removeTranslation(raindrop)
-    //     makeVisible(raindrop)
-    //   })
+      fadeInAnimation(raindrop, "0px").then(() => {
+        removeTranslation(raindrop)
+        makeVisible(raindrop)
+      })
 
-    //   if (i != typedRaindrops.length - 1) await wait(ANIMATION_ITERATION_DELAY)
-    // }
+      if (i != typedRaindrops.length - 1) await wait(ANIMATION_ITERATION_DELAY)
+    }
   }
   
 }
@@ -147,15 +149,6 @@ function removeTranslation(element: SVGGraphicsElement): void {
   element.style.removeProperty("--translate-y")
 }
 
-function createAnimationQueue(): { 
-  queue: AnimationPromise[],
-  pushAnimationPromise: () => Parameters<PromiseConstructor>[0]
-} {
-
-}
-
 function wait(ms: number): Promise<null> {
   return new Promise(resolve => setTimeout(() => resolve(null), ms))
 }
-
-createAnimationQueue()
