@@ -8,7 +8,7 @@ import { calculateAnimationDuration } from "../../animations/weatherAnimation/ca
 import { cloudAnimation } from "../../animations/weatherAnimation/cloudAnimation/cloudAnimation"
 import { sunAnimation } from "../../animations/weatherAnimation/sunAnimation/sunAnimation"
 import { windAnimation } from "../../animations/weatherAnimation/windAnimation/windAnimation"
-import { rainAnimation } from "../Rain/animation/rainAnimation"
+import { rainAnimation } from "../Rain/animation"
 
 
 export const CloudSunRain = memo( 

@@ -26,11 +26,11 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
       const raindropParts = rain.children[i].children[1]
 
       if (!(raindrop instanceof SVGPathElement)) {
-        throw("raindrop expected to be of type SVGPathElement")
+        throw ("raindrop expected to be of type SVGPathElement")
       }
 
       if (!(raindropParts instanceof SVGGElement)) {
-        throw("raindropParts expected to be of type SVGGElement")
+        throw ("raindropParts expected to be of type SVGGElement")
       }
 
       typedRaindrops.push(raindrop)
@@ -58,7 +58,7 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
     for (let i = 0; i < typedRaindrops.length; i++) {
       const raindrop = typedRaindrops[i]
 
-      fadeInAnimation(raindrop, "0px").then(() => {
+      fadeInToStartAnimation(raindrop).then(() => {
         removeTranslation(raindrop)
         makeVisible(raindrop)
       })
@@ -66,7 +66,7 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
       if (i != typedRaindrops.length - 1) await wait(ANIMATION_ITERATION_DELAY)
     }
   }
-  
+
 }
 
 function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: FallCoord): AnimationPromise {
@@ -74,13 +74,12 @@ function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: Fal
   raindrop.classList.add("animation-fall")
 
   return asyncOnAnimationEnd(raindrop, () => {
-    raindrop.classList.remove("animation-fall")
     raindrop.style.removeProperty("--fall-y")
+    raindrop.classList.remove("animation-fall")
   })
 }
 
 function breakOffAnimation(raindropParts: SVGGElement): AnimationPromise {
-
   for (let i = 0; i < raindropParts.children.length; i++) {
     const raindropPart = raindropParts.children[i]
 
@@ -102,17 +101,21 @@ function breakOffAnimation(raindropParts: SVGGElement): AnimationPromise {
   })
 }
 
-function fadeInAnimation(raindrop: SVGPathElement, yTranslation: string): AnimationPromise {
+function fadeInToStartAnimation(raindrop: SVGGraphicsElement): AnimationPromise {
+  raindrop.style.setProperty("--fade-in-y", "0px")
   raindrop.classList.add("animation-fade-in")
-  raindrop.style.setProperty("--fade-in-y", yTranslation)
-
+  
   return asyncOnAnimationEnd(raindrop, () => {
-    raindrop.classList.remove("animation-fade-in") 
     raindrop.style.removeProperty("--fade-in-y")
+    raindrop.classList.remove("animation-fade-in") 
   })
 }
 
-function asyncOnAnimationEnd(element: SVGGraphicsElement, onAnimationEnd: () => void): Promise<null> {
+function animate(element: SVGGraphicsElement) {
+  
+}
+
+function asyncOnAnimationEnd(element: SVGGraphicsElement, onAnimationEnd: () => void): AnimationPromise {
   return new Promise(resolve => {
 
     element.onanimationend = () => {

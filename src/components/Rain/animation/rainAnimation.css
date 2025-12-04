@@ -2,32 +2,19 @@
   visibility: hidden;
 }
 
-.animation-fall {
-  --fall-y: none;
-
-  animation: animation-fall 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
-}
-
-.animation-fade-in {
-  --fade-in-y: none;
-/* TODO: Создать функцию, возвращающую обратную функцию Безье */
-  animation: animation-fade-in 0.4s cubic-bezier(0.315, 0.78, 0.105, 0.97) 0s 1 normal forwards;
-}
-
-.raindrop, .raindrop-parts {
+.raindrop,
+.raindrop-parts {
   --translate-y: 0;
-  
+
   transform: translateY(var(--translate-y));
 }
 
-.raindrop-parts.animation-break-off .raindrop-part {
-  animation: animation-break-off 0.48s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
+.raindrop-part {
+  visibility: hidden;
 }
 
-.raindrop-part {
-  --stroke-dashoffset: none;
-
-  visibility: hidden;
+.animation-fall {
+  animation: animation-fall 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
 }
 
 @keyframes animation-fall {
@@ -37,6 +24,10 @@
     transform: translateY(var(--fall-y));
   }
 
+}
+
+.animation-break-off {
+  animation: animation-break-off 0.48s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards;
 }
 
 @keyframes animation-break-off {
@@ -51,13 +42,18 @@
 
   100% {
     opacity: 0;
-    stroke-dashoffset: var(--stroke-dashoffset);
+    stroke-dashoffset: var(--break-off-dashoffset);
   }
 
 }
 
+.animation-fade-in {
+/* TODO: Создать функцию, возвращающую обратную функцию Безье */
+  animation: animation-fade-in 0.4s cubic-bezier(0.315, 0.78, 0.105, 0.97) 0s 1 normal forwards;
+}
+
 @keyframes animation-fade-in {
-  
+
   0% {
     opacity: 0;
     visibility: visible;
@@ -70,5 +66,5 @@
   100% {
     transform: translateY(var(--fade-in-y));
   }
-  
+
 }
