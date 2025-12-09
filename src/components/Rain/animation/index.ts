@@ -111,7 +111,7 @@ function fadeInToStartAnimation(raindrop: SVGGraphicsElement): AnimationPromise 
   })
 }
 
-function animate(element: SVGGraphicsElement) {
+function animate(element: SVGGraphicsElement, animationClass: string, customProperties) {
   
 }
 
