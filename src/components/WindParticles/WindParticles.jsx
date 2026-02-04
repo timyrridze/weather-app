@@ -1,5 +1,8 @@
 import { useState, memo, forwardRef, useMemo, useEffect, useLayoutEffect } from "react"
 
+const fixVisibility = navigator.userAgent.includes("Firefox") ? (await import("./firefox optimization/fixVisibility.js")).default : () => null
+
+const getAdditionToScaleFactor = navigator.userAgent.includes("Firefox") ? (await import("./firefox optimization/getAdditionToScaleFactor.js")).default : () => 0
 
 function getStrokeWidth(strokeWidthInPx, svgWidth, devicePixelRatio) {
   // TODO: процент должен высчитываться программно, независимо от конкретного случая значений ширины SVG и SVG unit
@@ -7,11 +10,6 @@ function getStrokeWidth(strokeWidthInPx, svgWidth, devicePixelRatio) {
 
   return strokeWidthInPx / (strokeWidthUnit * devicePixelRatio)
 }
-
-const fixVisibility = navigator.userAgent.includes("Firefox") ? (await import("./firefox optimization/fixVisibility.js")).default : () => null
-
-const getAdditionToScaleFactor = navigator.userAgent.includes("Firefox") ? (await import("./firefox optimization/getAdditionToScaleFactor.js")).default : () => 0
-
   
 export const WindParticles = memo(forwardRef(
 

@@ -1,4 +1,7 @@
+import "./Rain.css"
 import { forwardRef, useEffect } from "react"
+import { rainingAnimation } from "./animation"
+import { assertType } from "../../utils/assertType"
 
 export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGGElement>) {
 
@@ -10,9 +13,21 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
           const raindropContainers = ref.current.querySelectorAll(".raindrop-container")
 
           raindropContainers.forEach(raindropContainer => {
-            const raindrop: SVGPathElement | null = raindropContainer.querySelector(".raindrop")
-            const raindropParts: SVGGElement | null = raindropContainer.querySelector(".raindrop-parts")
+            const raindrop = raindropContainer.querySelector(".raindrop")
+            const raindropParts = raindropContainer.querySelector(".raindrop-parts")
 
+            assertType<SVGPathElement>(
+              raindrop, 
+              "raindrop",
+              (value: unknown): value is SVGPathElement => value instanceof SVGPathElement
+            )
+
+            assertType<SVGGElement>(
+              raindropParts,
+              "raindropParts",
+              (value: unknown): value is SVGGElement => value instanceof SVGGElement
+            )
+            
             if (raindrop && raindropParts) {
               defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
             }
@@ -25,6 +40,9 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
 
   }, [])
 
+  useEffect(() => {
+    // rainingAnimation()
+  }, [])
 
   return (
     <g
@@ -38,7 +56,7 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
       fill="none">
 
       <g className="raindrop-container" transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
-        <path className="raindrop" d="M 15,0 V 12"/>
+        <rect className="raindrop" d="M 15,0 V 12"/>
         <g className="raindrop-parts">
           <path className="raindrop-part lower-raindrop-part"
             d="m 0.85137,45.983382 c 6.857523,-0.03844 13.9530677,1.12193 14.1120567,6.614593"
@@ -136,7 +154,7 @@ function defineRaindropPartsStrokeDash(raindropParts: SVGGElement, raindropTotal
     const raindropPart = raindropParts.children[i]
 
     if (!(raindropPart instanceof SVGPathElement)) {
-      throw ("raindropPart is expected to be of type SVGPathElement")
+      throw("raindropPart is expected to be of type SVGPathElement")
     }
 
     raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`

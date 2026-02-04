@@ -9,10 +9,6 @@
   transform: translateY(var(--translate-y));
 }
 
-.raindrop-part {
-  visibility: hidden;
-}
-
 .animation-fall {
   animation: animation-fall 0.4s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s 1 normal forwards;
 }

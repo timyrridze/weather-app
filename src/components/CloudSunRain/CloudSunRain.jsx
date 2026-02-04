@@ -8,7 +8,6 @@ import { calculateAnimationDuration } from "../../animations/weatherAnimation/ca
 import { cloudAnimation } from "../../animations/weatherAnimation/cloudAnimation/cloudAnimation"
 import { sunAnimation } from "../../animations/weatherAnimation/sunAnimation/sunAnimation"
 import { windAnimation } from "../../animations/weatherAnimation/windAnimation/windAnimation"
-import { rainAnimation } from "../Rain/animation"
 
 
 export const CloudSunRain = memo( 
@@ -88,19 +87,19 @@ export const CloudSunRain = memo(
 
     useEffect(() => {
 
-      if (animating === true && weather) {
-        const windParticles = windParticlesRef.current
-        const cloud = cloudRef.current
-        const sun = sunRef.current
-        const rain = rainRef.current
+      // if (animating === true && weather) {
+      //   const windParticles = windParticlesRef.current
+      //   const cloud = cloudRef.current
+      //   const sun = sunRef.current
+      //   const rain = rainRef.current
 
-        const windspeed = weather.currentConditions.windspeed
-        const animationDuration = calculateAnimationDuration(windspeed)
+      //   const windspeed = weather.currentConditions.windspeed
+      //   const animationDuration = calculateAnimationDuration(windspeed)
 
-        setTimeout(() => {
-          weatherAnimation([rainAnimation(rain, getRainAnimationFallCoord())])
-        }, 1000)
-      }
+      //   setTimeout(() => {
+      //     weatherAnimation([rainAnimation(rain, getRainAnimationFallCoord())])
+      //   }, 1000)
+      // }
 
     }, [weather])
 

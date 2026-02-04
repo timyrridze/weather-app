@@ -1,16 +1,18 @@
-import "./rainAnimation.css"
 import type { AnimationPromise } from "./types"
 import { getUserUnitInPx } from "../../../utils/getUserUnitInPx"
 import { createAnimationQueue } from "./createAnimationQueue"
+import "./styles.css"
 
 interface FallCoord {
   value: number,
   correction: number
 }
 
+type RaindropParts = SVGPathElement[]
+
 const ANIMATION_ITERATION_DELAY: number = 2000
 
-export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
+export function rainingAnimation(rain: { raindrop: SVGGraphicsElement, raindropParts: RaindropParts}[], fallCoordValue: FallCoord['value']) {
 
   const fallCoord: FallCoord = {
     value: fallCoordValue,
@@ -18,22 +20,11 @@ export function rainAnimation(rain: SVGGElement, fallCoordValue: number) {
   }
 
   return async (resolve: (value: void) => void) => {
-    const typedRaindrops: SVGPathElement[] = []
     const animationQueue = createAnimationQueue()
 
-    for (let i = rain.children.length - 1; i >= 0; i--) {
-      const raindrop = rain.children[i].children[0]
-      const raindropParts = rain.children[i].children[1]
-
-      if (!(raindrop instanceof SVGPathElement)) {
-        throw ("raindrop expected to be of type SVGPathElement")
-      }
-
-      if (!(raindropParts instanceof SVGGElement)) {
-        throw ("raindropParts expected to be of type SVGGElement")
-      }
-
-      typedRaindrops.push(raindrop)
+    for (let i = rain.length - 1; i >= 0; i--) {
+      const raindrop = rain[i].raindrop
+      const raindropParts = rain[i].raindropParts
 
       fallAnimation(raindrop, fallCoord).then(() => {
         makeInvisible(raindrop)
@@ -111,8 +102,8 @@ function fadeInToStartAnimation(raindrop: SVGGraphicsElement): AnimationPromise 
   })
 }
 
-function animate(element: SVGGraphicsElement, animationClass: string, customProperties) {
-  
+function animate(element: SVGGraphicsElement, animationClass: string) {
+  console.log("1")
 }
 
 function asyncOnAnimationEnd(element: SVGGraphicsElement, onAnimationEnd: () => void): AnimationPromise {

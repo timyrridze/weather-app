@@ -1,5 +1,5 @@
 import './App.scss'
-import React, {createContext, useState} from "react"
+import {createContext, useState} from "react"
 import { MainContent } from './components/MainContent/MainContent.jsx'
 import { ExtraContent } from './components/ExtraContent/ExtraContent.jsx'
 

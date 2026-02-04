@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, memo } from "react"
+import { useRef, useState, useEffect, memo } from "react"
 import "./SelectCity.scss"
 import { DEFAULT_CITY } from "../../App.jsx"
 import { cities } from "../../api/cities"
@@ -143,6 +143,7 @@ function SelectCity({ setWeather }) {
 
   const citiesElementRef = useRef()
 
+// TODO: перенести запрос данных в App component
   useEffect(() => {
 
     ;(async () => {
