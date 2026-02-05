@@ -14,7 +14,7 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
 
           raindropContainers.forEach(raindropContainer => {
             const raindrop = raindropContainer.querySelector(".raindrop")
-            const raindropParts = raindropContainer.querySelector(".raindrop-parts")
+            const raindropParts = raindropContainer.querySelector(".raindrop-parts")?.children
 
             assertType<SVGPathElement>(
               raindrop, 
@@ -28,9 +28,8 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
               (value: unknown): value is SVGGElement => value instanceof SVGGElement
             )
             
-            if (raindrop && raindropParts) {
-              defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
-            }
+            defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())
+            
           })
         } catch(e) {
           console.error(e)
@@ -56,7 +55,7 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
       fill="none">
 
       <g className="raindrop-container" transform="matrix(1.1024306,0,0,1.1024306,-1.8278875,78.242559)">
-        <rect className="raindrop" d="M 15,0 V 12"/>
+        <path className="raindrop" d="M 15,0 V 12"/>
         <g className="raindrop-parts">
           <path className="raindrop-part lower-raindrop-part"
             d="m 0.85137,45.983382 c 6.857523,-0.03844 13.9530677,1.12193 14.1120567,6.614593"
