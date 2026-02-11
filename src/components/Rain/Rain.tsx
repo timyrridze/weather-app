@@ -22,29 +22,28 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
               (value: unknown): value is SVGPathElement => value instanceof SVGPathElement
             )
 
-            assertType<ArrayLike<unknown>>(
+            assertType<{}>(
               raindropParts,
               "raindropParts",
-              (value: unknown): value is ArrayLike<unknown> => {
+              (value: unknown): value is {} => {
                 return !!raindropParts
               }
             )
-
-            raindropParts = Array.from<unknown, SVGPathElement>(raindropParts, (element): SVGPathElement => {
+            
+            const raindropPartsArr = Array.from<unknown, SVGPathElement>(raindropParts, (raindropPart) => {
 
               assertType<SVGPathElement>(
-                element,
+                raindropPart,
                 "element",
                 (value: unknown): value is SVGPathElement => {
                   return value instanceof SVGPathElement
                 }
               )
                 
-              return element
+              return raindropPart
             })
-            raindropParts
 
-            defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())            
+            defineRaindropPartsStrokeDash(raindropPartsArr, raindrop.getTotalLength())            
           })
         } catch(e) {
           console.error(e)
@@ -161,12 +160,14 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
   )
 })
 
+function getRaindropContainerObj() {
+  
+}
+
 function defineRaindropPartsStrokeDash(raindropParts: SVGPathElement[], raindropTotalLength: number) {
   const strokeDashLength = raindropTotalLength / raindropParts.length
 
-  for (let i = 0; i < raindropParts.length; i++) {
-    const raindropPart = raindropParts[i]
-
+  for (const raindropPart of raindropParts) {
     raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`
     raindropPart.style.strokeDashoffset = `${strokeDashLength}`
   }
