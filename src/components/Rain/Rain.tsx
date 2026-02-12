@@ -2,6 +2,7 @@ import "./Rain.css"
 import { forwardRef, useEffect } from "react"
 import { rainingAnimation } from "./animation"
 import { assertType } from "../../utils/assertType"
+import { assertArrayLikeType } from "../../utils/assertArrayLikeType"
 
 export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGGElement>) {
 
@@ -25,25 +26,16 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
             assertType<{}>(
               raindropParts,
               "raindropParts",
-              (value: unknown): value is {} => {
-                return !!raindropParts
-              }
+              (value: unknown): value is {} => !!value
             )
-            
-            const raindropPartsArr = Array.from<unknown, SVGPathElement>(raindropParts, (raindropPart) => {
 
-              assertType<SVGPathElement>(
-                raindropPart,
-                "element",
-                (value: unknown): value is SVGPathElement => {
-                  return value instanceof SVGPathElement
-                }
-              )
-                
-              return raindropPart
-            })
-
-            defineRaindropPartsStrokeDash(raindropPartsArr, raindrop.getTotalLength())            
+            assertArrayLikeType<SVGPathElement>(
+              raindropParts,
+              "raindropParts",
+              (value: unknown): value is SVGPathElement => value instanceof SVGPathElement
+            )
+           
+            defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())            
           })
         } catch(e) {
           console.error(e)
@@ -160,14 +152,12 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
   )
 })
 
-function getRaindropContainerObj() {
-  
-}
-
-function defineRaindropPartsStrokeDash(raindropParts: SVGPathElement[], raindropTotalLength: number) {
+function defineRaindropPartsStrokeDash(raindropParts: ArrayLike<SVGPathElement>, raindropTotalLength: number) {
   const strokeDashLength = raindropTotalLength / raindropParts.length
 
-  for (const raindropPart of raindropParts) {
+  for (let i = 0; i < raindropParts.length; i++) {
+    const raindropPart = raindropParts[i]
+
     raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`
     raindropPart.style.strokeDashoffset = `${strokeDashLength}`
   }

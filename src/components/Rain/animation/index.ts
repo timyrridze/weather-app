@@ -8,7 +8,7 @@ interface FallCoord {
   correction: number
 }
 
-type RaindropParts = SVGPathElement[]
+type RaindropParts = ArrayLike<SVGPathElement>
 
 const ANIMATION_ITERATION_DELAY: number = 2000
 
@@ -70,14 +70,10 @@ function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: Fal
   })
 }
 
-function breakOffAnimation(raindropParts: SVGGElement): AnimationPromise {
-  for (let i = 0; i < raindropParts.children.length; i++) {
-    const raindropPart = raindropParts.children[i]
-
-    if (!(raindropPart instanceof SVGPathElement)) {
-      throw ("raindropPart expected to be of type SVGPathElement")
-    }
-
+function breakOffAnimation(raindropParts: RaindropParts): AnimationPromise {
+  for (let i = 0; i < raindropParts.length; i++) {
+    const raindropPart = raindropParts[i]
+    
     raindropPart.style.setProperty("--stroke-dashoffset", `${raindropPart.getTotalLength()}px`)
 
     raindropPart.onanimationend = () => {
