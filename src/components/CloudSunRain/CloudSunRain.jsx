@@ -18,7 +18,6 @@ export const CloudSunRain = memo(
     const windParticlesRef = useRef()
     const cloudRef = useRef()
     const sunRef = useRef()
-    const rainRef = useRef()
     
     const heightCoefficient = 63 / 66.98000000007721
     const height = width * heightCoefficient
@@ -80,7 +79,7 @@ export const CloudSunRain = memo(
 
         </g>
 
-        <Rain ref={rainRef}/>
+        <Rain animating={true} getRainingAnimationFallCoord={getRainAnimationFallCoord}/>
         
       </g>
     )

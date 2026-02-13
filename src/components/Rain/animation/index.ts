@@ -12,7 +12,7 @@ type RaindropParts = ArrayLike<SVGPathElement>
 
 const ANIMATION_ITERATION_DELAY: number = 2000
 
-export function rainingAnimation(rain: { raindrop: SVGGraphicsElement, raindropParts: RaindropParts}[], fallCoordValue: FallCoord['value']) {
+export function rainingAnimation(rain: { raindrop: SVGGraphicsElement, raindropParts: RaindropParts }[], fallCoordValue: FallCoord['value']) {
 
   const fallCoord: FallCoord = {
     value: fallCoordValue,
@@ -58,6 +58,17 @@ export function rainingAnimation(rain: { raindrop: SVGGraphicsElement, raindropP
     }
   }
 
+}
+
+function defineRaindropPartsStrokeDash(raindropParts: ArrayLike<SVGPathElement>, raindropTotalLength: number) {
+  const strokeDashLength = raindropTotalLength / raindropParts.length
+
+  for (let i = 0; i < raindropParts.length; i++) {
+    const raindropPart = raindropParts[i]
+
+    raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`
+    raindropPart.style.strokeDashoffset = `${strokeDashLength}`
+  }
 }
 
 function fallAnimation<T extends SVGGraphicsElement>(raindrop: T, fallCoord: FallCoord): AnimationPromise {

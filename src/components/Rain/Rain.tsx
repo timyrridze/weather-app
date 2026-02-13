@@ -1,53 +1,57 @@
 import "./Rain.css"
-import { forwardRef, useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { rainingAnimation } from "./animation"
 import { assertType } from "../../utils/assertType"
 import { assertArrayLikeType } from "../../utils/assertArrayLikeType"
 
-export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGGElement>) {
+type Props = {
+  animating: boolean,
+  getRainingAnimationFallCoord: () => number
+}
+
+export const Rain = function Rain({ animating, getRainingAnimationFallCoord }: Props) { 
+  const ref = useRef<SVGGElement>(null) 
 
   useEffect(() => {
-    
-      if (ref && "current" in ref && ref.current) {
 
-        try {
-          const raindropContainers = ref.current.querySelectorAll(".raindrop-container")
+    if (animating && ref.current) {
+      const rain: Parameters<typeof rainingAnimation>[0] = []
 
-          raindropContainers.forEach(raindropContainer => {
-            const raindrop = raindropContainer.querySelector(".raindrop")
-            let raindropParts: ArrayLike<unknown> | undefined = raindropContainer.querySelector(".raindrop-parts")?.children
+      try {
+        const raindropContainers = ref.current.querySelectorAll(".raindrop-container")
+        
+        raindropContainers.forEach(raindropContainer => {
+          const raindrop = raindropContainer.querySelector(".raindrop")
+          let raindropParts: ArrayLike<unknown> | undefined = raindropContainer.querySelector(".raindrop-parts")?.children
 
-            assertType<SVGPathElement>(
-              raindrop,
-              "raindrop",
-              (value: unknown): value is SVGPathElement => value instanceof SVGPathElement
-            )
+          assertType<SVGPathElement>(
+            raindrop,
+            "raindrop",
+            (value: unknown): value is SVGPathElement => value instanceof SVGPathElement
+          )
 
-            assertType<{}>(
-              raindropParts,
-              "raindropParts",
-              (value: unknown): value is {} => !!value
-            )
+          assertType<{}>(
+            raindropParts,
+            "raindropParts",
+            (value: unknown): value is {} => !!value
+          )
 
-            assertArrayLikeType<SVGPathElement>(
-              raindropParts,
-              "raindropParts",
-              (value: unknown): value is SVGPathElement => value instanceof SVGPathElement
-            )
-           
-            defineRaindropPartsStrokeDash(raindropParts, raindrop.getTotalLength())            
-          })
-        } catch(e) {
-          console.error(e)
-        }
+          assertArrayLikeType<SVGPathElement>(
+            raindropParts,
+            "raindropParts",
+            (value: unknown): value is SVGPathElement => value instanceof SVGPathElement
+          )
 
+          rain.push({ raindrop, raindropParts })
+        })
+      } catch(e) {
+        console.error(e)
       }
 
-  }, [])
+      rainingAnimation(rain, getRainingAnimationFallCoord())
+    }
 
-  useEffect(() => {
-    // rainingAnimation()
-  }, [])
+  }, [animating, getRainingAnimationFallCoord])
 
   return (
     <g
@@ -150,15 +154,6 @@ export const Rain = forwardRef(function Rain(props, ref: React.ForwardedRef<SVGG
 
     </g>
   )
-})
-
-function defineRaindropPartsStrokeDash(raindropParts: ArrayLike<SVGPathElement>, raindropTotalLength: number) {
-  const strokeDashLength = raindropTotalLength / raindropParts.length
-
-  for (let i = 0; i < raindropParts.length; i++) {
-    const raindropPart = raindropParts[i]
-
-    raindropPart.style.strokeDasharray = `${strokeDashLength} ${raindropPart.getTotalLength() - strokeDashLength}`
-    raindropPart.style.strokeDashoffset = `${strokeDashLength}`
-  }
 }
+
+
